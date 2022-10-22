@@ -1,11 +1,11 @@
 {
-    "port": 9000,
-    "resPath": [
-        ""
-    ],
-    "user": "vtracker2",
-    "password": "2022",
-    "updateTime": "60000",
-    "firstStart": true,
-    "openOnStart": false
+  "port": 9000,
+  "resPath": [
+    "D:\\Steam\\steamapps\\common\\Assetto Corsa Competizione Dedicated Server\\server\\results"
+  ],
+  "user": "vtracker2",
+  "password": "2022",
+  "updateTime": "60000",
+  "firstStart": true,
+  "openOnStart": true
 }

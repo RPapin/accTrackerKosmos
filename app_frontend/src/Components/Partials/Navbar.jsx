@@ -6,7 +6,8 @@ class Navbar extends Component {
         return (
             <nav className="navbar fixed-top">
                 <Link to="/">
-                    <img className="navbar-brand" src="/img/helmet.png" alt="logo" />
+                    {/* <img className="navbar-brand" src="/img/helmet.png" alt="logo" /> */}
+                    Kosmos Racing Team
                 </Link>
                 <div className="navbar-right justify-content-end">
                     <Link to="/dashboard">
