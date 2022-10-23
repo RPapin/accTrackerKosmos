@@ -10,7 +10,7 @@ exports.getAllJsonFiles = async (filespath) => {
         files.forEach(file => {
             if (file.indexOf(".json") > -1 && (file.includes("_FP") || file.includes("_Q") || file.includes("_R"))) {
                 arr.push(this.getJsonFile(filespath + "/" + file));
-                console.log(`FILE OK ${colors.green(file)}`);
+                // console.log(`FILE OK ${colors.green(file)}`);
             } else {
                 console.log(`FILE SKIPPED ${colors.red(file)}`);
             }
@@ -41,7 +41,6 @@ exports.getAllJsonDataCreation = async (filespath) => {
             dates.push(dateCreation["birthtime"]);
         })
     }
-
     return dates;
 }
 

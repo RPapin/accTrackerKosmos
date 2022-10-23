@@ -1,0 +1,8 @@
+Performance !
+Translation
+Footer 
+
+Check valid weird
+mettre en rouge tant que pas objectif, variable a définir
+Dans le serverDetail mettre l'objectif de tour et le nombre de tour
+Agrandir circuit 

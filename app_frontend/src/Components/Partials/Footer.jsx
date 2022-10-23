@@ -7,17 +7,17 @@ class Footer extends Component {
                 <div className="container">
                     <div className="footer-cta pt-3 pb-3">
                         <div className="row">
-                            <div className="col-xl-4 col-md-4 mb-30">
+                            <div className="col-xl-6 col-md-6 mb-30">
                                 <div className="single-cta">
                                     <i className="fas fa-crown"></i>
                                     <div className="cta-text">
                                         <h4>Author</h4>
-                                        <span>Mattia Devigus</span>
+                                        <span>Kosmos x Rémi PAPIN</span>
                                     </div>
                                 </div>
                             </div>
                             <hr className="only-mobile"/>
-                            <div className="col-xl-4 col-md-4 mb-30">
+                            <div className="col-xl-6 col-md-6 mb-30">
                                 <div className="single-cta">
                                     <i className="fas fa-gamepad"></i>
                                     <div className="cta-text">
@@ -27,7 +27,7 @@ class Footer extends Component {
                                 </div>
                             </div>
                             <hr className="only-mobile"/>
-                            <div className="col-xl-4 col-md-4 mb-30">
+                            {/* <div className="col-xl-4 col-md-4 mb-30">
                                 <div className="single-cta">
                                     <i className="fab fa-paypal"></i>
                                     <div className="cta-text">
@@ -37,8 +37,8 @@ class Footer extends Component {
                                         </a>
                                     </div>
                                 </div>
-                            </div>
-                            <hr className="only-mobile"/>
+                            </div> */}
+                            {/* <hr className="only-mobile"/> */}
                         </div>
                     </div>
                 </div>

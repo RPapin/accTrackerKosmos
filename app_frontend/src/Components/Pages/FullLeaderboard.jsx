@@ -66,7 +66,7 @@ class FullLeaderboard extends Component {
                                     {
                                         this.state.data.map((time, i) => {
                                             return (
-                                                <tr>
+                                                <tr key={i}>
                                                     <td>{i + 1}</td>
                                                     <td>{time.tim_driverName}</td>
                                                     <td className="only-desktop">{((time.tim_sectorOne === this.state.bestSessions.bestSectorOne ? <span className="bestEle">{time.tim_sectorOne}</span> : time.tim_sectorOne))}</td>

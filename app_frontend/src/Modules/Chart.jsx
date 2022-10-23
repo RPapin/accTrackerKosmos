@@ -156,8 +156,6 @@ class Chart {
             arrColors.push(car.car_color);
         }
 
-        console.log(arrCount);
-
         let ctx = document.getElementById(id).getContext('2d');
         new cjs(ctx, {
             type: 'doughnut',

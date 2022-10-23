@@ -151,7 +151,7 @@ exports.fullLeaderboard = (track) => {
 
 exports.serverLeaderboard = (server, track) => {
     const db = new sqlite(pathDb);
-
+    // request to update to gather only valids laps / all laps
     let stmt = db.prepare(`SELECT * FROM (SELECT *, sum(tim_sectorOne + tim_sectorTwo + tim_sectorTree) as tim_totalTime FROM Times INNER JOIN Cars on tim_carModel = car_id INNER JOIN Sessions ON ses_id = tim_sessionId WHERE ses_serverName = ? AND ses_track = ? AND tim_isValid=-1 AND tim_aciValid=-1 GROUP BY tim_driverName, tim_sectorOne, tim_sectorTwo, tim_sectorTree ORDER BY tim_totalTime ASC) GROUP BY tim_driverName ORDER BY tim_totalTime ASC;`);
     let times = stmt.all(server, track);
 
@@ -174,16 +174,19 @@ exports.serverLeaderboard = (server, track) => {
     let bestAvgCar = stmt.get(server, track);
     let avgCars = stmt.all(server, track);
 
-    // ACI 
-    stmt = db.prepare(`SELECT tim_driverName, count(tim_driverName) as tim_aciCount FROM Times INNER JOIN Sessions ON tim_sessionId = ses_id WHERE ses_serverName = ? AND ses_track = ? GROUP BY tim_drivername`);
-    let aciCount = stmt.all(server, track);
-
+    // Valid laps
+    stmt = db.prepare(`SELECT tim_driverName, count(tim_driverName) as tim_validCount FROM Times INNER JOIN Sessions ON tim_sessionId = ses_id WHERE ses_serverName = ? AND ses_track = ? AND tim_isValid = -1 GROUP BY tim_drivername`);
+    let validsCount = stmt.all(server, track);
+    //For all who havn't made one valid lap
     stmt = db.prepare(`SELECT * FROM (SELECT *, sum(tim_sectorOne + tim_sectorTwo + tim_sectorTree) as tim_totalTime FROM Times INNER JOIN Cars on tim_carModel = car_id INNER JOIN Sessions ON ses_id = tim_sessionId WHERE ses_serverName = ? AND ses_track = ? AND tim_aciValid=-1 GROUP BY tim_driverName, tim_sectorOne, tim_sectorTwo, tim_sectorTree ORDER BY tim_totalTime ASC) GROUP BY tim_driverName HAVING tim_isValid = 0 ORDER BY tim_totalTime ASC;`);
     let notValidTimes = stmt.all(server, track);
+    //count all laps
+    stmt = db.prepare(`SELECT tim_driverName, count(tim_driverName) as tim_totalCount FROM Times INNER JOIN Sessions ON tim_sessionId = ses_id WHERE ses_serverName = ? AND ses_track = ? GROUP BY tim_drivername`);
+    let allLapsCount = stmt.all(server, track);
 
     db.close();
 
-    return[times, bestTime, driverCount, bestSectors, info, cars, bestAvgCar, avgCars, aciCount, notValidTimes];
+    return[times, bestTime, driverCount, bestSectors, info, cars, bestAvgCar, avgCars, validsCount, notValidTimes, allLapsCount];
 }
 
 exports.serverDetail = (server, track, driverName) => {

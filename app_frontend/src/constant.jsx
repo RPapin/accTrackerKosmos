@@ -1,0 +1,1 @@
+export const VALID_LAPS_TARGET = 30;

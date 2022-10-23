@@ -5,6 +5,7 @@ import Footer from '../Partials/Footer';
 import Loader from '../Partials/Loader';
 import Base from './../../Modules/Base';
 import ChartJS from './../../Modules/Chart';
+import { VALID_LAPS_TARGET } from '../../constant';
 
 class ServerDetail extends Component {
 
@@ -21,7 +22,10 @@ class ServerDetail extends Component {
             bestSectors: []
         }
     }
-
+    displayAll = () => {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("normalPage").style.display = "block";
+    }
     componentDidMount = () => {
         window.scrollTo(0, 0);
 
@@ -30,16 +34,13 @@ class ServerDetail extends Component {
         const driverName = window.location.href.split("/")[6];
 
         document.getElementById("normalPage").style.display = "none";
-
+        console.log('call to' +  `http://${Base.getIp()}:${Base.getPort()}/serverDetail/${serverName}/${track}/${driverName}`);
         axios.post(`http://${Base.getIp()}:${Base.getPort()}/serverDetail/${serverName}/${track}/${driverName}`)
             .then(res => {
-                this.setState({ bestDriverTime: res.data[0], bestTime: res.data[1], times: res.data[2], avgSpeed: res.data[3], totalLaps: res.data[4], bestSectors: res.data[5] })
+                console.log('res')
+                this.setState({ bestDriverTime: res.data[0], bestTime: res.data[1], times: res.data[2], avgSpeed: res.data[3], totalLaps: res.data[4], bestSectors: res.data[5] },
+                    this.displayAll)
                 ChartJS.lineChartAvg("laps", this.state.times);
-
-                setTimeout(() => {
-                    document.getElementById("loader").style.display = "none";
-                    document.getElementById("normalPage").style.display = "block";
-                }, 1000);
             });
     }
 
@@ -92,7 +93,7 @@ class ServerDetail extends Component {
                                                 <h3>AVG SPEED: <span>{this.state.avgSpeed}</span> Km/h</h3>
                                             </div>
                                             <div className="col-12 col-md-4">
-                                                <h3>TOTAL LAPS: {this.state.totalLaps.tim_driverCount >= 40 ? <span className="baseEle">{this.state.totalLaps.tim_driverCount}</span> : <span className="personalBestEle">{this.state.totalLaps.tim_driverCount}</span>}/40</h3>
+                                                <h3>TOTAL LAPS: {this.state.totalLaps.tim_driverCount >= VALID_LAPS_TARGET ? <span className="baseEle">{this.state.totalLaps.tim_driverCount}</span> : <span className="personalBestEle">{this.state.totalLaps.tim_driverCount}</span>} / {VALID_LAPS_TARGET}</h3>
                                             </div>
                                         </div>
                                         <hr />
@@ -136,7 +137,7 @@ class ServerDetail extends Component {
 
                                         this.state.times.map((time, i) => {
                                             return (
-                                                <tr className={(time.tim_totalTime === this.state.bestDriverTime.tim_totalTime ? "bestTr" : "")}>
+                                                <tr className={(time.tim_totalTime === this.state.bestDriverTime.tim_totalTime ? "bestTr" : "")} key={i}>
                                                     <td id="lapCount">{i + 1}</td>
                                                     <td className="only-desktop">{time.tim_sectorOne}</td>
                                                     <td className="only-desktop">{time.tim_sectorTwo}</td>

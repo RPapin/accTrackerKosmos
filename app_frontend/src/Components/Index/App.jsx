@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Navbar from './../Partials/Navbar';
 import Footer from './../Partials/Footer';
 import Loader from '../Partials/Loader';
@@ -18,14 +18,20 @@ class App extends Component {
             tracks: []
         }
     }
+    handleRowClick = (url) => {
+        this.props.history.push(url);
+      }  
 
     componentDidMount = () => {
         window.scrollTo(0, 0);
         document.title = "Vtracker";
         document.getElementById("normalPage").style.display = "none";
+        console.log('call to ')
+        console.log(`http://${Base.getIp()}:${Base.getPort()}`)
         axios.post(`http://${Base.getIp()}:${Base.getPort()}`)
             .then((res) => {
-                console.log(res);
+                console.log('res')
+                console.log(res)
                 this.setState({ servers: res.data.servers, data: res.data.sessions, tracks: res.data.tracks });
                 document.getElementById("loader").style.display = "none";
                 document.getElementById("normalPage").style.display = "block";
@@ -40,14 +46,14 @@ class App extends Component {
                 </div>
                 <div id="normalPage">
                     <Navbar />
-                    <section id="homeSection" className="animate__animated animate__fadeIn">
+                    {/* <section id="homeSection" className="animate__animated animate__fadeIn">
                         <div id="homeContainer">
                             <img src="/img/icon.png" alt="" />
                             <hr />
                             <p id="homeDesc">Car session timing system. Powered by Assetto Corsa Competizione Server <br /> Created by Mattia Devigus</p>
-{/*                             <Link data-bs-toggle="modal" data-bs-target="#update">
+                          <Link data-bs-toggle="modal" data-bs-target="#update">
                                 <button className="btn btn-danger">What's new</button>
-                            </Link> */}
+                            </Link> 
                         </div>
                         <div id="arrowCont">
                             <a href="#2">
@@ -58,7 +64,7 @@ class App extends Component {
                             </a>
                             <a name="2"></a>
                         </div>
-                    </section>
+                    </section> */}
                     <section id="homeSection2">
                         <div id="homeTitle">
                             <h1>SERVER LIST</h1>
@@ -68,7 +74,7 @@ class App extends Component {
                                 <div className="row">
                                     {this.state.servers.map((server, i) => {
                                         return (
-                                            <div className="col-12 serverCol">
+                                            <div className="col-12 serverCol" key={i}>
                                                 <Link id="trackLink" to={"/serverLeaderboard/" + server.ses_serverName + "/" + server.tra_nameCode}>
                                                     <div className="row">
                                                         <div className="col-12 col-md-4">
@@ -91,7 +97,7 @@ class App extends Component {
                             </div>
                         </div>
                     </section>
-                    {/* <section id="homeSection2">
+                    <section id="homeSection2">
                         <div id="homeTitle">
                             <h1>TOTAL RESULTS PER TRACK</h1>
                         </div>
@@ -100,7 +106,7 @@ class App extends Component {
                                 <div className="row">
                                     {this.state.tracks.map((track, i) => {
                                         return (
-                                            <div className="col-6 col-lg-4 trackCol">
+                                            <div className="col-6 col-lg-4 trackCol" key={i}>
                                                 <Link id="trackLink" to={"/fullLeaderboard/" + track.tra_nameCode}>
                                                     <img id="flagCol" src={track.tra_track} alt="track" />
                                                     <h5>{track.tra_name}</h5>
@@ -131,21 +137,20 @@ class App extends Component {
                                     {
                                         this.state.data.map((session, i) => {
                                             return (
-                                                <Link className="linkTable" to={`session/${session.ses_id}`}>
-                                                    <tr>
-                                                        <td>{session.ses_serverName}</td>
-                                                        <td>{session.ses_creation.split("GMT")[0]}</td>
-                                                        <td><img className="only-desktop" src={session.tra_flag} alt="" /> <span className="only-desktop">|</span> <img src={session.tra_track} /></td>
-                                                        <td className="only-desktop"> {(session.ses_weather < 0.1 ? <i className="fas fa-sun"></i> : <i className="fas fa-cloud-rain"></i>)} </td>
-                                                        <td className="only-desktop">{session.ses_type}</td>
-                                                    </tr>
-                                                </Link>
+                                                <tr className="linkTable" onClick={()=> this.handleRowClick(`session/${session.ses_id}`)} key={i}>
+                                                    
+                                                    <td>{session.ses_serverName}</td>
+                                                    <td>{session.ses_creation.split("GMT")[0]}</td>
+                                                    <td><img className="only-desktop" src={session.tra_flag} alt="" /> <span className="only-desktop">|</span> <img src={session.tra_track} /></td>
+                                                    <td className="only-desktop"> {(session.ses_weather < 0.1 ? <i className="fas fa-sun"></i> : <i className="fas fa-cloud-rain"></i>)} </td>
+                                                    <td className="only-desktop">{session.ses_type}</td>
+                                                </tr>
                                             )
                                         })}
                                 </tbody>
                             </table>
                         </div>
-                    </section> */}
+                    </section>
                     <Footer />
                 </div >
                 <Update />
@@ -154,4 +159,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withRouter(App);

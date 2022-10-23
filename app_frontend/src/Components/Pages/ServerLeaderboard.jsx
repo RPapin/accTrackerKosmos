@@ -5,7 +5,7 @@ import Footer from '../Partials/Footer';
 import Loader from '../Partials/Loader';
 import Chart from './../../Modules/Chart';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class ServerLeaderboard extends Component {
 
@@ -21,10 +21,14 @@ class ServerLeaderboard extends Component {
             usedCars: [],
             bestCarAvg: [],
             avgCars: [],
-            aciCount: [],
-            notValidTimes: []
+            validCount: [],
+            notValidTimes: [],
+            allLapsCount: []
         }
     }
+    handleRowClick = (url) => {
+        this.props.history.push(url);
+      }  
 
     componentDidMount = () => {
         window.scrollTo(0, 0);
@@ -33,12 +37,15 @@ class ServerLeaderboard extends Component {
         let server = id[4];
         let track = id[5];
 
-        console.log(`http://${Base.getIp()}:${Base.getPort()}/serverLeaderboard/${server}/${track}`)
-
         document.getElementById("normalPage").style.display = "none";
         axios.post(`http://${Base.getIp()}:${Base.getPort()}/serverLeaderboard/${server}/${track}`)
             .then((res) => {
-                this.setState({ times: res.data[0], bestTime: res.data[1].tim_totalTime, totalDrivers: res.data[2].tim_driverCount, bestSessions: res.data[3], trackInfo: res.data[4], usedCars: res.data[5], bestCarAvg: res.data[6], avgCars: res.data[7], aciCount: res.data[8], notValidTimes: res.data[9] });
+                
+                this.setState({ times: res.data[0], bestTime: res.data[1].tim_totalTime, totalDrivers: res.data[2].tim_driverCount, 
+                    bestSessions: res.data[3], trackInfo: res.data[4], usedCars: res.data[5], bestCarAvg: res.data[6], avgCars: res.data[7], 
+                    validCount: res.data[8], notValidTimes: res.data[9], allLapsCount: res.data[10] }, () => {
+                        console.log(this.state)
+                    });
                 setTimeout(() => {
                     document.getElementById("loader").style.display = "none";
                     document.getElementById("normalPage").style.display = "block";
@@ -103,24 +110,25 @@ class ServerLeaderboard extends Component {
                                             track = track.split("#")[0];
                                             let driverLink = "/serverDetail/" + serverName + "/" + track + "/" + time.tim_driverName;
                                             return (
-                                                <Link className="linkTable" to={driverLink}>
-                                                    <tr>
-                                                        <td>{i + 1}</td>
-                                                        <td>{time.tim_driverName}</td>
-                                                        {/* <td className="only-desktop"><img src={time.car_img} /></td> */}
-                                                        <td className="only-desktop">{time.car_name}</td>
-                                                        <td className="only-desktop">{((time.tim_sectorOne === this.state.bestSessions.bestSectorOne ? <span className="bestEle">{time.tim_sectorOne}</span> : time.tim_sectorOne))}</td>
-                                                        <td className="only-desktop">{(time.tim_sectorTwo === this.state.bestSessions.bestSectorTwo ? <span className="bestEle">{time.tim_sectorTwo}</span> : time.tim_sectorTwo)}</td>
-                                                        <td className="only-desktop">{(time.tim_sectorTree === this.state.bestSessions.bestSectorTree ? <span className="bestEle">{time.tim_sectorTree}</span> : time.tim_sectorTree)}</td>
-                                                        <td>{(time.tim_totalTime === this.state.bestDriverTime ? <span className="personalBestEle"> {Base.getFullTime((time.tim_totalTime * 1000))}</span> : Base.getFullTime((time.tim_totalTime * 1000)))}</td>
-                                                        <td className="only-desktop">{this.state.aciCount.map(count => {
-                                                            if (count.tim_driverName === time.tim_driverName) {
-                                                                return count.tim_aciCount < 40 ? <span className="personalBestEle">{count.tim_aciCount}</span> : <span className="baseEle">{count.tim_aciCount}</span>;
-                                                            }
-                                                        })}/40</td>
-                                                        <td>{Base.getGap((this.state.bestTime * 1000), (time.tim_totalTime * 1000))}</td>
-                                                    </tr>
-                                                </Link>
+                                                <tr className="linkTable" onClick={()=> this.handleRowClick(driverLink)} key={i}>
+                                                    <td>{i + 1}</td>
+                                                    <td>{time.tim_driverName}</td>
+                                                    {/* <td className="only-desktop"><img src={time.car_img} /></td> */}
+                                                    <td className="only-desktop">{time.car_name}</td>
+                                                    <td className="only-desktop">{((time.tim_sectorOne === this.state.bestSessions.bestSectorOne ? <span className="bestEle">{time.tim_sectorOne}</span> : time.tim_sectorOne))}</td>
+                                                    <td className="only-desktop">{(time.tim_sectorTwo === this.state.bestSessions.bestSectorTwo ? <span className="bestEle">{time.tim_sectorTwo}</span> : time.tim_sectorTwo)}</td>
+                                                    <td className="only-desktop">{(time.tim_sectorTree === this.state.bestSessions.bestSectorTree ? <span className="bestEle">{time.tim_sectorTree}</span> : time.tim_sectorTree)}</td>
+                                                    <td>{(time.tim_totalTime === this.state.bestDriverTime ? <span className="personalBestEle"> {Base.getFullTime((time.tim_totalTime * 1000))}</span> : Base.getFullTime((time.tim_totalTime * 1000)))}</td>
+                                                    <td className="only-desktop">{this.state.validCount.map(count => {
+                                                        
+                                                        if (count.tim_driverName === time.tim_driverName) {
+                                                            const allLaps = this.state.allLapsCount.find(x => x.tim_driverName === count.tim_driverName)
+                                                            console.log(allLaps)
+                                                            return <><span className="personalBestEle">{count.tim_validCount}</span> / {allLaps.tim_totalCount}</>;
+                                                        }
+                                                    })}</td>
+                                                    <td>{Base.getGap((this.state.bestTime * 1000), (time.tim_totalTime * 1000))}</td>
+                                                </tr>
                                             )
                                         })
                                     }
@@ -134,24 +142,22 @@ class ServerLeaderboard extends Component {
                                             track = track.split("#")[0];
                                             let driverLink = "/serverDetail/" + serverName + "/" + track + "/" + time.tim_driverName;
                                             return (
-                                                <Link className="linkTable" to={driverLink}>
-                                                    <tr>
-                                                        <td><span className="baseEle">-</span></td>
-                                                        <td><span className="baseEle">{time.tim_driverName}</span></td>
-                                                        {/* <td className="only-desktop"><img src={time.car_img} /></td> */}
-                                                        <td className="only-desktop"><span className="baseEle">{time.car_name}</span></td>
-                                                        <td className="only-desktop"><span className="baseEle">{time.tim_sectorOne}</span></td>
-                                                        <td className="only-desktop"><span className="baseEle">{time.tim_sectorTwo}</span></td>
-                                                        <td className="only-desktop"><span className="baseEle">{time.tim_sectorTree}</span></td>
-                                                        <td><span className="baseEle"> {Base.getFullTime((time.tim_totalTime * 1000))}</span></td>
-                                                        <td className="only-desktop">{this.state.aciCount.map(count => {
-                                                            if (count.tim_driverName === time.tim_driverName) {
-                                                                return count.tim_aciCount < 40 ? <span className="personalBestEle">{count.tim_aciCount}</span> : <span className="baseEle">{count.tim_aciCount}</span>;
-                                                            }
-                                                        })}/40</td>
-                                                        <td><span className="baseEle">-</span>{/* {Base.getGap((this.state.bestTime * 1000), (time.tim_totalTime * 1000))} */}</td>
-                                                    </tr>
-                                                </Link>
+                                                <tr className="linkTable" onClick={()=> this.handleRowClick(driverLink)} key={i}>
+                                                    <td><span className="baseEle">-</span></td>
+                                                    <td><span className="baseEle">{time.tim_driverName}</span></td>
+                                                    {/* <td className="only-desktop"><img src={time.car_img} /></td> */}
+                                                    <td className="only-desktop"><span className="baseEle">{time.car_name}</span></td>
+                                                    <td className="only-desktop"><span className="baseEle">{time.tim_sectorOne}</span></td>
+                                                    <td className="only-desktop"><span className="baseEle">{time.tim_sectorTwo}</span></td>
+                                                    <td className="only-desktop"><span className="baseEle">{time.tim_sectorTree}</span></td>
+                                                    <td><span className="baseEle"> {Base.getFullTime((time.tim_totalTime * 1000))}</span></td>
+                                                    <td className="only-desktop">{this.state.validCount.map(count => {
+                                                        if (count.tim_driverName === time.tim_driverName) {
+                                                            return count.tim_validCount < 40 ? <span className="personalBestEle">{count.tim_validCount}</span> : <span className="baseEle">{count.tim_validCount}</span>;
+                                                        }
+                                                    })}/40</td>
+                                                    <td><span className="baseEle">-</span>{/* {Base.getGap((this.state.bestTime * 1000), (time.tim_totalTime * 1000))} */}</td>
+                                                </tr>
                                             )
                                         })
                                     }
@@ -213,28 +219,28 @@ class ServerLeaderboard extends Component {
                             <h1>STATS</h1>
                         </div>
                         <div id="chartContainer">
-                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
+                            <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
+                                <div className="carousel-inner">
+                                    <div className="carousel-item active">
                                         <canvas id="gapFirst"></canvas>
                                         <hr />
                                         <h5>GAP FROM THE FIRST DRIVER</h5>
                                         <span id="chartDescription">Graphical representation of the gap between the first driver and all of the following</span>
                                     </div>
-                                    <div class="carousel-item">
+                                    <div className="carousel-item">
                                         <canvas id="carUsed"></canvas>
                                         <hr />
                                         <h5>USED CARS</h5>
                                         <span id="chartDescription">Graphical representation of the number of cars used grouped by models</span>
                                     </div>
                                 </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
+                                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span className="visually-hidden">Previous</span>
                                 </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
+                                <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span className="visually-hidden">Next</span>
                                 </button>
                             </div>
                         </div>
@@ -246,4 +252,4 @@ class ServerLeaderboard extends Component {
     }
 }
 
-export default ServerLeaderboard;
+export default withRouter(ServerLeaderboard);

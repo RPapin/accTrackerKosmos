@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Navbar from './../Partials/Navbar';
 import Footer from '../Partials/Footer';
 import Loader from '../Partials/Loader';
@@ -20,6 +20,10 @@ class Session extends Component {
             bestSessions: []
         }
     }
+
+    handleRowClick = (url) => {
+        this.props.history.push(url);
+      }  
 
     componentDidMount = () => {
         window.scrollTo(0, 0);
@@ -70,8 +74,7 @@ class Session extends Component {
                                             sesId = sesId.split("#")[0];
                                             let driverLink = "/session/" + sesId + "/" + time.tim_driverName;
                                             return (
-                                                <Link className="linkTable" to={driverLink}>
-                                                    <tr>
+                                                    <tr className="linkTable" onClick={()=> this.handleRowClick(driverLink)} key={i}>
                                                         <td>{i + 1}</td>
                                                         <td>{time.tim_driverName}</td>
                                                         <td className="only-desktop">{((time.tim_sectorOne === this.state.bestSessions.bestSectorOne ? <span className="bestEle">{time.tim_sectorOne}</span> : time.tim_sectorOne))}</td>
@@ -80,7 +83,6 @@ class Session extends Component {
                                                         <td>{Base.getFullTime((time.tim_totalTime * 1000))}</td>
                                                         <td className="only-desktop">{Base.getGap((this.state.bestTime * 1000), (time.tim_totalTime * 1000))}</td>
                                                     </tr>
-                                                </Link>
                                             )
                                         })
                                     }
@@ -142,4 +144,4 @@ class Session extends Component {
     }
 }
 
-export default Session;
+export default withRouter(Session);

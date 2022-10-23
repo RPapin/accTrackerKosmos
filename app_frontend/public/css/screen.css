@@ -182,7 +182,7 @@ and (min-width : 1401px) {
     }
 
     #sessionList {
-        max-height: 63vh;
+        max-height: 80vh;
     }
 
     .only-mobile {

@@ -62,7 +62,6 @@ class Base {
         } else {
             axios.post(`http://${this.getIp()}:${this.getPort()}/checkLogin`, {pass: sessionStorage.getItem("token")})
                 .then(res => {
-                    console.log(res);
                     if(res.data !== true) {
                         sessionStorage.removeItem("token");
                         this.checkLogin();

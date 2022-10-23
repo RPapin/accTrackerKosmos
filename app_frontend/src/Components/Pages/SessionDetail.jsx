@@ -28,7 +28,6 @@ class Chart extends Component {
 
         axios.post(`http://${Base.getIp()}:${Base.getPort()}/session/${sesId}/${driverId}`)
             .then((res) => {
-                console.log(res);
                 this.setState({ times: res.data[0], avgSpeed: res.data[1], bestTime: res.data[2], bestDriverTime: res.data[3] });
                 ChartJS.lineChartAvg("laps", this.state.times);
                 setTimeout(() => {
@@ -66,7 +65,7 @@ class Chart extends Component {
 
                                         this.state.times.map((time, i) => {
                                             return (
-                                                <tr>
+                                                <tr key={i}>
                                                     <td>{i + 1}</td>
                                                     <td>{time.tim_sectorOne}</td>
                                                     <td>{time.tim_sectorTwo}</td>
