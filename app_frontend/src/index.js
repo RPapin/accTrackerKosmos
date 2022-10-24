@@ -9,6 +9,7 @@ import Login from './Components/Private/Login';
 import ServerLeaderboard from './Components/Pages/ServerLeaderboard';
 import ServerDetail from './Components/Pages/ServerDetail';
 import Dashboard from './Components/Private/Dashboard';
+import './i18n';
 
 let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);

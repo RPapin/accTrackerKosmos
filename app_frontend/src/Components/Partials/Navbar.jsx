@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
+import LanguageSwitcher from './languageSwitcher/languageSwitcher';
+import { withTranslation } from 'react-i18next';
 
 class Navbar extends Component {
     render = () => {
@@ -9,9 +11,12 @@ class Navbar extends Component {
                     {/* <img className="navbar-brand" src="/img/helmet.png" alt="logo" /> */}
                     Kosmos Racing Team
                 </Link>
+                <div>
+                    <LanguageSwitcher />
+                </div>
                 <div className="navbar-right justify-content-end">
                     <Link to="/dashboard">
-                        <h5><i className="fas fa-user-lock"></i> ADMIN AREA </h5>
+                        <h5><i className="fas fa-user-lock"></i>{this.props.t('header.admin')}</h5>
                     </Link>
                 </div>
             </nav>
@@ -29,4 +34,4 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar;
+export default withTranslation()(Navbar);

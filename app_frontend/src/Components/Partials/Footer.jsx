@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { withTranslation } from 'react-i18next';
 
 class Footer extends Component {
     render = () => {
@@ -11,7 +12,7 @@ class Footer extends Component {
                                 <div className="single-cta">
                                     <i className="fas fa-crown"></i>
                                     <div className="cta-text">
-                                        <h4>Author</h4>
+                                        <h4>{this.props.t('footer.author')}</h4>
                                         <span>Kosmos x Rémi PAPIN</span>
                                     </div>
                                 </div>
@@ -21,7 +22,7 @@ class Footer extends Component {
                                 <div className="single-cta">
                                     <i className="fas fa-gamepad"></i>
                                     <div className="cta-text">
-                                        <h4>Game</h4>
+                                        <h4>{this.props.t('footer.game')}</h4>
                                         <span>Assetto Corsa Competizione</span>
                                     </div>
                                 </div>
@@ -47,4 +48,4 @@ class Footer extends Component {
     }
 }
 
-export default Footer;
+export default withTranslation()(Footer);

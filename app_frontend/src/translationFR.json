@@ -1,0 +1,60 @@
+{
+    "header" : {
+        "admin" : "Admin"
+    },
+    "home" : {
+        "serverList" : "Liste des serveurs",
+        "totalResultPerTrack" : "Liste des résultats par circuit",
+        "sessionList": "Liste des sessions",
+        "sessionArray" : {
+            "name" : "Nom",
+            "date" : "Date",
+            "track" : "Circuit",
+            "weather" : "Météo",
+            "type" : "Type",
+            "gap" : "Gap",
+            "laps" : "Tours",
+            "time" : "Temps",
+            "car" : "Voiture"
+        }
+    },
+    "footer" : {
+        "author" : "Auteurs",
+        "game" : "Jeu"
+    },
+    "fullLeaderboad" : {
+        "title" : "Classement",
+        "optimalTime" : "Temps Optimal",
+        "details" : "Détails",
+        "bestTime" : "Meilleur temps de la session",
+        "totalDrivers" : "Total pilote"
+    },
+    "serverDetail" : {
+        "driverName" : "Driver Name",
+        "gapToBest" : "Gap to best time",
+        "pbTime" : "Meilleur temps",
+        "avgSpeed" : "Vitesse moyenne",
+        "totalLaps" : "Tours total"
+    },
+    "serverLeaderboard" : {
+        "stats" : "Stats",
+        "gapToFirst" : "Ecart avec le plus rapide",
+        "graphicalRepresentation": "Représentation graphique de l'écart entre le premier pilote et tous les suivants",
+        "usedCars": "Voitures utilisées",
+        "graphicalRepresentationNumbersCars": "Représentation graphique du nombre de voitures utilisées par modèles"
+    },
+    "session" : {
+        "timetable": "Temps au tour",
+        "weatherType": "Météo"
+    },
+    "sessionDetail" : {
+        "lapsOf" : "Tour de",
+        "avgSpeed" : "Vitesse moyenne",
+        "gapToFirst" : "Ecart avec le plus rapide",
+        "lapTrend" : "Tendance",
+        "graphDriverPerf" : "Représentation graphique de la performance des tours du pilote lors des sessions serveur",
+        "whiteLine" : "La ligne blanche représente la moyenne des tours précédents"
+    },
+    "previous": "Précédent",
+    "next": "Suivant"
+}

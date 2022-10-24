@@ -47,22 +47,26 @@ checkACI = (driverName, time) => {
 }
 
 exports.serverCollections = () => {
+    console.log('call to servers')
     const db = new sqlite(pathDb);
 
     let stmt = db.prepare(`SELECT * FROM Sessions INNER JOIN Tracks ON ses_track = tra_nameCode INNER JOIN Times on tim_sessionId = ses_id GROUP BY ses_serverName, ses_track, ses_weather ORDER BY ses_weather ASC`);
     let servers = stmt.all();
 
     db.close();
+    console.log('finish servers')
     return servers;
 }
 
 exports.sessionCollections = () => {
+    console.log('call to collections')
     const db = new sqlite(pathDb);
 
     let stmt = db.prepare(`SELECT * FROM Sessions INNER JOIN Tracks ON ses_track = tra_nameCode INNER JOIN Times ON tim_sessionId = ses_id GROUP BY  ses_id`);
     let sessions = stmt.all();
 
     db.close();
+    console.log('finish collections')
     return sessions;
 }
 
@@ -116,13 +120,14 @@ exports.driverDetail = (sessionId, driverName) => {
 }
 
 exports.getAllTracks = () => {
+    console.log('call to getAllTracks')
     const db = new sqlite(pathDb);
 
     let stmt = db.prepare(`SELECT tra_name, tra_nameCode, tra_flag, tra_track FROM Sessions INNER JOIN Tracks ON ses_track = tra_nameCode INNER JOIN Times ON tim_sessionId = ses_id GROUP BY tra_name`);
     let tracks = stmt.all();
 
     db.close();
-
+    console.log('finish getAllTracks')
     return tracks;
 }
 

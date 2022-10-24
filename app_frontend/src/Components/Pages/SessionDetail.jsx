@@ -5,6 +5,7 @@ import Footer from '../Partials/Footer';
 import Base from './../../Modules/Base';
 import ChartJS from './../../Modules/Chart';
 import Loader from '../Partials/Loader';
+import { withTranslation } from 'react-i18next';
 
 class Chart extends Component {
 
@@ -47,17 +48,17 @@ class Chart extends Component {
                     <section id="sessionDetailSection">
                         <Navbar />
                         <div id="sessionTitle">
-                            <h1>LAPS OF <span className="baseEle">{this.state.driverName}</span></h1>
+                            <h1>{this.props.t('sessionDetail.lapsOf')} <span className="baseEle">{this.state.driverName}</span></h1>
                         </div>
                         <div id="sessionContainer">
                             <table id="sessionList">
                                 <thead>
                                     <tr>
-                                        <th>Lap</th>
+                                        <th>{this.props.t('home.sessionArray.laps')}</th>
                                         <th>S1</th>
                                         <th>S2</th>
                                         <th>S3</th>
-                                        <th>Time</th>
+                                        <th>{this.props.t('home.sessionArray.time')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -90,19 +91,19 @@ class Chart extends Component {
                     <a name="2"></a>
                     <section id="sessionDetailSection2">
                         <div id="sessionTitle">
-                            <h1>STATS</h1>
+                            <h1>{this.props.t('serverLeaderboard.stats')}</h1>
                         </div>
                         <div id="chartContainer">
                             <div className="row">
                                 <div className="col col-lg-6">
                                     <i className="fas fa-flag-checkered"></i>
-                                    <h3 className="only-desktop" id="statSession">AVERAGE SPEED (FL)</h3>
+                                    <h3 className="only-desktop" id="statSession">{this.props.t('sessionDetail.avgSpeed')}</h3>
                                     <hr />
                                     <h2>{this.state.avgSpeed} KM/H</h2>
                                 </div>
                                 <div className="col col-lg-6">
                                     <i className="fas fa-road"></i>
-                                    <h3 className="only-desktop" id="statSession">GAP FROM THE FIRST</h3>
+                                    <h3 className="only-desktop" id="statSession">{this.props.t('sessionDetail.gapToFirst')}</h3>
                                     <hr />
                                     <h2 id="statSession">{Base.getGap((this.state.bestTime * 1000), (this.state.bestDriverTime * 1000))}</h2>
                                 </div>
@@ -110,12 +111,12 @@ class Chart extends Component {
                             <div className="row">
                                 <div className="col-12 col-lg-12">
                                     <i className="far fa-chart-bar"></i>
-                                    <h3>LAP TREND:</h3>
+                                    <h3>{this.props.t('sessionDetail.lapTrend')}:</h3>
                                     <canvas id="laps"></canvas>
                                     <hr />
-                                    <span id="chartDescription">Graphical representation of the performance of the driver's laps during server sessions.</span>
+                                    <span id="chartDescription">{this.props.t('sessionDetail.graphDriverPerf')}</span>
                                     <br />
-                                    <span>The white line represents the average of the previous laps</span>
+                                    <span>{this.props.t('sessionDetail.whiteLine')}</span>
                                 </div>
                             </div>
                         </div>
@@ -127,4 +128,4 @@ class Chart extends Component {
     }
 }
 
-export default Chart;
+export default withTranslation()(Chart);

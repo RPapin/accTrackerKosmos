@@ -5,7 +5,7 @@
   ],
   "user": "vtracker2",
   "password": "2022",
-  "updateTime": "60000",
+  "updateTime": "3600000",
   "firstStart": true,
   "openOnStart": true
 }

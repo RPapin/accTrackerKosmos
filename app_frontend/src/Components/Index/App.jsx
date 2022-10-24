@@ -6,6 +6,7 @@ import Loader from '../Partials/Loader';
 import Base from '../../Modules/Base';
 import axios from 'axios';
 import Update from '../Private/Modals/Update';
+import { withTranslation } from 'react-i18next';
 
 class App extends Component {
 
@@ -67,7 +68,7 @@ class App extends Component {
                     </section> */}
                     <section id="homeSection2">
                         <div id="homeTitle">
-                            <h1>SERVER LIST</h1>
+                            <h1>{this.props.t('home.serverList')}</h1>
                         </div>
                         <div id="homeContainer2">
                             <div className="container">
@@ -99,7 +100,7 @@ class App extends Component {
                     </section>
                     <section id="homeSection2">
                         <div id="homeTitle">
-                            <h1>TOTAL RESULTS PER TRACK</h1>
+                            <h1>{this.props.t('home.totalResultPerTrack')}</h1>
                         </div>
                         <div id="homeContainer2">
                             <div className="container">
@@ -120,17 +121,17 @@ class App extends Component {
                     </section>
                     <section id="homeSection2" className="animate__animated animate__fadeIn">
                         <div id="homeTitle">
-                            <h1>SESSIONS LIST</h1>
+                            <h1>{this.props.t('home.sessionList')}</h1>
                         </div>
                         <div id="homeContainer2">
                             <table id="sessionList">
                                 <thead>
                                     <tr>
-                                        <th>Server Name</th>
-                                        <th>Date</th>
-                                        <th>Track</th>
-                                        <th className="only-desktop">Weather</th>
-                                        <th className="only-desktop">Type</th>
+                                        <th>{this.props.t('home.sessionArray.name')}</th>
+                                        <th>{this.props.t('home.sessionArray.date')}</th>
+                                        <th>{this.props.t('home.sessionArray.track')}</th>
+                                        <th className="only-desktop">{this.props.t('home.sessionArray.weather')}</th>
+                                        <th className="only-desktop">{this.props.t('home.sessionArray.type')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -159,4 +160,4 @@ class App extends Component {
     }
 }
 
-export default withRouter(App);
+export default withTranslation()(withRouter(App));

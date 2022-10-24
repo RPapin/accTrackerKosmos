@@ -16,7 +16,8 @@ exports.getAllJsonFiles = async (filespath) => {
             }
         });
 
-        console.log(colors.green("-------------------------------------"));
+        // console.log(colors.green("-------------------------------------"));
+        
     } else {
         console.log(colors.bgRed(`No directory found || Your directory: ${filespath}`));
     }

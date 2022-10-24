@@ -4,6 +4,7 @@ import Footer from './../Partials/Footer';
 import Loader from '../Partials/Loader';
 import axios from 'axios';
 import Base from './../../Modules/Base';
+import { withTranslation } from 'react-i18next';
 
 class FullLeaderboard extends Component {
 
@@ -46,20 +47,20 @@ class FullLeaderboard extends Component {
                     <Navbar />
                     <section id="sessionSection">
                         <div id="sessionTitle">
-                            <h1>FULL LEADERBOARD - {this.state.trackInfo.tra_name}</h1>
+                            <h1>{this.props.t('fullLeaderboad.title')} - {this.state.trackInfo.tra_name}</h1>
                         </div>
                         <div id="sessionContainer">
                             <table id="sessionList">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Full Name</th>
+                                        <th>{this.props.t('home.sessionArray.name')}</th>
                                         <th className="only-desktop">S1</th>
                                         <th className="only-desktop">S2</th>
                                         <th className="only-desktop">S3</th>
-                                        <th>Time</th>
-                                        <th>Laps</th>
-                                        <th>Gap</th>
+                                        <th>{this.props.t('home.sessionArray.time')}</th>
+                                        <th>{this.props.t('home.sessionArray.laps')}</th>
+                                        <th>{this.props.t('home.sessionArray.gap')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -82,7 +83,7 @@ class FullLeaderboard extends Component {
                                 </tbody>
                             </table>
                             <div className="only-full-desktop" id="tableFooter">
-                                <h5>OPTIMAL TIME: <span className="bestEle"> {Base.getFullTime((this.state.bestSessions.bestSectorOne * 1000) + (this.state.bestSessions.bestSectorTwo * 1000) + (this.state.bestSessions.bestSectorTree * 1000))} </span> </h5>
+                                <h5>{this.props.t('fullLeaderboad.optimalTime')}: <span className="bestEle"> {Base.getFullTime((this.state.bestSessions.bestSectorOne * 1000) + (this.state.bestSessions.bestSectorTwo * 1000) + (this.state.bestSessions.bestSectorTree * 1000))} </span> </h5>
                             </div>
                         </div>
                         <div id="arrowCont">
@@ -97,7 +98,7 @@ class FullLeaderboard extends Component {
                     <a name="2"></a>
                     <section id="sessionSection2">
                         <div id="sessionTitle">
-                            <h1>DETAILS</h1>
+                            <h1>{this.props.t('fullLeaderboad.details')}</h1>
                         </div>
                         <div id="sessionContainer">
                             <div className="row">
@@ -105,12 +106,12 @@ class FullLeaderboard extends Component {
                                 <div className="col-6 col-lg-5">
                                     <h1 id="statSession" className="bestEle">{Base.getFullTime((this.state.bestTime * 1000))}</h1>
                                     <hr />
-                                    <h3 id="statSession">BEST TIME SESSION</h3>
+                                    <h3 id="statSession">{this.props.t('fullLeaderboad.bestTime')}</h3>
                                 </div>
                                 <div className="col-6 col-lg-5">
                                     <h1 id="statSession">{this.state.totalDrivers}</h1>
                                     <hr />
-                                    <h3 id="statSession">TOTAL DRIVERS</h3>
+                                    <h3 id="statSession">{this.props.t('fullLeaderboad.totalDrivers')}</h3>
                                 </div>
                                 <div className="col-lg-1"></div>
                             </div>
@@ -123,4 +124,4 @@ class FullLeaderboard extends Component {
     }
 }
 
-export default FullLeaderboard;
+export default withTranslation()(FullLeaderboard);

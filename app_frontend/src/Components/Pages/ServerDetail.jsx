@@ -6,6 +6,7 @@ import Loader from '../Partials/Loader';
 import Base from './../../Modules/Base';
 import ChartJS from './../../Modules/Chart';
 import { VALID_LAPS_TARGET } from '../../constant';
+import { withTranslation } from 'react-i18next';
 
 class ServerDetail extends Component {
 
@@ -72,12 +73,12 @@ class ServerDetail extends Component {
                                             <div className="col-6 col-md-3 ">
                                                 <span id="drivername">{(((window.location.href).split("/")[6]).replace("%20", " ")).split("#")[0]}</span>
                                                 <hr />
-                                                <span className="baseEle">Driver Name</span>
+                                                <span className="baseEle">{this.props.t('serverDetail.driverName')}</span>
                                             </div>
                                             <div className="col-6 col-md-3">
                                                 <span id="drivername">{Base.getGap((this.state.bestDriverTime.tim_totalTime * 1000), (this.state.bestTime.tim_totalTime * 1000))}</span>
                                                 <hr />
-                                                <span className="baseEle">Gap to best time</span>
+                                                <span className="baseEle">{this.props.t('serverDetail.gapToBest')}</span>
                                             </div>
                                             <div className="col-md-3"></div>
                                         </div>
@@ -87,13 +88,13 @@ class ServerDetail extends Component {
                                     <div className="card-body">
                                         <div className="row">
                                             <div className="col-12 col-md-4">
-                                                <h3>PB TIME: {this.state.bestDriverTime.tim_totalTime === this.state.bestTime.tim_totalTime ? <span className="bestEle">{Base.getFullTime(this.state.bestDriverTime.tim_totalTime * 1000)}</span> : <span>{Base.getFullTime(this.state.bestDriverTime.tim_totalTime * 1000)}</span>}</h3>
+                                                <h3>{this.props.t('serverDetail.pbtime')}: {this.state.bestDriverTime.tim_totalTime === this.state.bestTime.tim_totalTime ? <span className="bestEle">{Base.getFullTime(this.state.bestDriverTime.tim_totalTime * 1000)}</span> : <span>{Base.getFullTime(this.state.bestDriverTime.tim_totalTime * 1000)}</span>}</h3>
                                             </div>
                                             <div className="col-12 col-md-4">
-                                                <h3>AVG SPEED: <span>{this.state.avgSpeed}</span> Km/h</h3>
+                                                <h3>{this.props.t('serverDetail.avgSpeed')}: <span>{this.state.avgSpeed}</span> Km/h</h3>
                                             </div>
                                             <div className="col-12 col-md-4">
-                                                <h3>TOTAL LAPS: {this.state.totalLaps.tim_driverCount >= VALID_LAPS_TARGET ? <span className="baseEle">{this.state.totalLaps.tim_driverCount}</span> : <span className="personalBestEle">{this.state.totalLaps.tim_driverCount}</span>} / {VALID_LAPS_TARGET}</h3>
+                                                <h3>{this.props.t('serverDetail.totalLaps')}: {this.state.totalLaps.tim_driverCount >= VALID_LAPS_TARGET ? <span className="baseEle">{this.state.totalLaps.tim_driverCount}</span> : <span className="personalBestEle">{this.state.totalLaps.tim_driverCount}</span>} / {VALID_LAPS_TARGET}</h3>
                                             </div>
                                         </div>
                                         <hr />
@@ -177,4 +178,4 @@ class ServerDetail extends Component {
     }
 }
 
-export default ServerDetail;
+export default withTranslation()(ServerDetail);

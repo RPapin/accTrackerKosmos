@@ -6,6 +6,7 @@ import Loader from '../Partials/Loader';
 import Chart from './../../Modules/Chart';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
 
 class ServerLeaderboard extends Component {
 
@@ -89,15 +90,15 @@ class ServerLeaderboard extends Component {
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Full Name</th>
+                                        <th>{this.props.t('home.sessionArray.name')}</th>
                                         {/* <th className="only-desktop">Logo</th> */}
-                                        <th className="only-desktop">Car</th>
+                                        <th className="only-desktop">{this.props.t('home.sessionArray.car')}</th>
                                         <th className="only-desktop">S1</th>
                                         <th className="only-desktop">S2</th>
                                         <th className="only-desktop">S3</th>
-                                        <th>Time</th>
-                                        <th className="only-desktop">Laps</th>
-                                        <th>Gap</th>
+                                        <th>{this.props.t('home.sessionArray.type')}</th>
+                                        <th className="only-desktop">{this.props.t('home.sessionArray.laps')}</th>
+                                        <th>{this.props.t('home.sessionArray.gap')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -123,7 +124,6 @@ class ServerLeaderboard extends Component {
                                                         
                                                         if (count.tim_driverName === time.tim_driverName) {
                                                             const allLaps = this.state.allLapsCount.find(x => x.tim_driverName === count.tim_driverName)
-                                                            console.log(allLaps)
                                                             return <><span className="personalBestEle">{count.tim_validCount}</span> / {allLaps.tim_totalCount}</>;
                                                         }
                                                     })}</td>
@@ -164,7 +164,7 @@ class ServerLeaderboard extends Component {
                                 </tbody>
                             </table>
                             <div className="only-full-desktop" id="tableFooter">
-                                <h5>OPTIMAL TIME: <span className="bestEle"> {Base.getFullTime((this.state.bestSessions.bestSectorOne * 1000) + (this.state.bestSessions.bestSectorTwo * 1000) + (this.state.bestSessions.bestSectorTree * 1000))} </span> </h5>
+                                <h5>{this.props.t('fullLeaderboad.optimalTime')}: <span className="bestEle"> {Base.getFullTime((this.state.bestSessions.bestSectorOne * 1000) + (this.state.bestSessions.bestSectorTwo * 1000) + (this.state.bestSessions.bestSectorTree * 1000))} </span> </h5>
                             </div>
                         </div>
                         <div id="arrowCont">
@@ -181,7 +181,7 @@ class ServerLeaderboard extends Component {
                         <div id="sessionTitle">
                             <div className="row">
                                 <div className="col-12">
-                                    <h1>DETAILS</h1>
+                                    <h1>{this.props.t('fullLeaderboad.details')}</h1>
                                 </div>
                             </div>
                         </div>
@@ -191,12 +191,12 @@ class ServerLeaderboard extends Component {
                                 <div className="col-6 col-lg-5">
                                     <h1 id="statSession" className="bestEle">{Base.getFullTime((this.state.bestTime * 1000))}</h1>
                                     <hr />
-                                    <h3 id="statSession">BEST TIME SESSION</h3>
+                                    <h3 id="statSession">{this.props.t('fullLeaderboad.bestTime')}</h3>
                                 </div>
                                 <div className="col-6 col-lg-5">
                                     <h1 id="statSession">{this.state.totalDrivers}</h1>
                                     <hr />
-                                    <h3 id="statSession">TOTAL DRIVERS</h3>
+                                    <h3 id="statSession">{this.props.t('fullLeaderboad.totalDrivers')}</h3>
                                 </div>
                                 <div className="col-lg-1"></div>
                             </div>
@@ -216,7 +216,7 @@ class ServerLeaderboard extends Component {
                         <div id="sessionTitle">
                             <i className="fas fa-poll-h"></i>
                             <hr />
-                            <h1>STATS</h1>
+                            <h1>{this.props.t('serverLeaderboard.stats')}</h1>
                         </div>
                         <div id="chartContainer">
                             <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
@@ -224,23 +224,23 @@ class ServerLeaderboard extends Component {
                                     <div className="carousel-item active">
                                         <canvas id="gapFirst"></canvas>
                                         <hr />
-                                        <h5>GAP FROM THE FIRST DRIVER</h5>
-                                        <span id="chartDescription">Graphical representation of the gap between the first driver and all of the following</span>
+                                        <h5>{this.props.t('serverLeaderboard.gapToFirst')}</h5>
+                                        <span id="chartDescription">{this.props.t('serverLeaderboard.graphicalRepresentation')}</span>
                                     </div>
                                     <div className="carousel-item">
                                         <canvas id="carUsed"></canvas>
                                         <hr />
-                                        <h5>USED CARS</h5>
-                                        <span id="chartDescription">Graphical representation of the number of cars used grouped by models</span>
+                                        <h5>{this.props.t('serverLeaderboard.usedCars')}</h5>
+                                        <span id="chartDescription">{this.props.t('serverLeaderboard.graphicalRepresentationNumbersCars')}</span>
                                     </div>
                                 </div>
                                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span className="visually-hidden">Previous</span>
+                                    <span className="visually-hidden">{this.props.t('previous')}</span>
                                 </button>
                                 <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
                                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span className="visually-hidden">Next</span>
+                                    <span className="visually-hidden">{this.props.t('next')}</span>
                                 </button>
                             </div>
                         </div>
@@ -252,4 +252,4 @@ class ServerLeaderboard extends Component {
     }
 }
 
-export default withRouter(ServerLeaderboard);
+export default withTranslation()(withRouter(ServerLeaderboard));
