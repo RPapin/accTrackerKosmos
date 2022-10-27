@@ -30,9 +30,10 @@
         "totalDrivers" : "Total pilote"
     },
     "serverDetail" : {
+        "pbTime" : "Meilleur temps",
         "driverName" : "Driver Name",
         "gapToBest" : "Gap to best time",
-        "pbTime" : "Meilleur temps",
+        
         "avgSpeed" : "Vitesse moyenne",
         "totalLaps" : "Tours total"
     },
@@ -48,7 +49,7 @@
         "weatherType": "Météo"
     },
     "sessionDetail" : {
-        "lapsOf" : "Tour de",
+        "laps" : "Tour de",
         "avgSpeed" : "Vitesse moyenne",
         "gapToFirst" : "Ecart avec le plus rapide",
         "lapTrend" : "Tendance",

@@ -27,10 +27,17 @@ class ServerLeaderboard extends Component {
             allLapsCount: []
         }
     }
+    handleGoBack =  (url) => {
+        this.props.history.push(url);
+    }
     handleRowClick = (url) => {
         this.props.history.push(url);
-      }  
-
+    }  
+    
+    toogleDisplay = (hide) => {
+        document.getElementById("loader").style.display = hide ? "block" : "none";
+        document.getElementById("normalPage").style.display = hide ?  "none" : "block";
+    }
     componentDidMount = () => {
         window.scrollTo(0, 0);
 
@@ -45,12 +52,8 @@ class ServerLeaderboard extends Component {
                 this.setState({ times: res.data[0], bestTime: res.data[1].tim_totalTime, totalDrivers: res.data[2].tim_driverCount, 
                     bestSessions: res.data[3], trackInfo: res.data[4], usedCars: res.data[5], bestCarAvg: res.data[6], avgCars: res.data[7], 
                     validCount: res.data[8], notValidTimes: res.data[9], allLapsCount: res.data[10] }, () => {
-                        console.log(this.state)
+                        this.toogleDisplay(false);
                     });
-                setTimeout(() => {
-                    document.getElementById("loader").style.display = "none";
-                    document.getElementById("normalPage").style.display = "block";
-                }, 1000);
 
                 Chart.lineChart("gapFirst", this.state.times);
                 Chart.doughnutChart("carUsed", this.state.usedCars);
@@ -67,19 +70,25 @@ class ServerLeaderboard extends Component {
                 <div id="normalPage">
                     <Navbar />
                     <section id="serverSection">
-                        <div className="row">
-                            <div className="col-md-3 only-desktop">
-                                <img id="flagTitle" src={this.state.trackInfo.tra_track} alt="" />
+                        <div className="row goBackRow">
+                            <div className="col-12">
+                                <span className="goBackBtn" onClick={() => this.handleGoBack('/')}></span>
                             </div>
+                        </div>
+                        <div className="row">
                             <div className="col-md-6">
                                 <div className="row">
-                                    <div className="col-12 col-md-6">
-                                        <h3 id="serverInfo"> {this.state.trackInfo.ses_serverName}</h3>
-                                    </div>
+     
                                     <div className="col-12 col-md-6">
                                         <h3 id="serverInfo"> {this.state.trackInfo.tra_name}</h3>
                                     </div>
+                                    <div className="col-12 col-md-6">
+                                        <h3 id="serverInfo"> {this.state.trackInfo.ses_serverName}</h3>
+                                    </div>
                                 </div>
+                            </div>
+                            <div className="col-md-3 only-desktop">
+                                <img id="trackTitle" src={this.state.trackInfo.tra_track} alt="" />
                             </div>
                             <div className="col-md-3 only-desktop">
                                 <img id="flagTitle" src={this.state.trackInfo.tra_flag} alt="" />
@@ -111,7 +120,7 @@ class ServerLeaderboard extends Component {
                                             track = track.split("#")[0];
                                             let driverLink = "/serverDetail/" + serverName + "/" + track + "/" + time.tim_driverName;
                                             return (
-                                                <tr className="linkTable" onClick={()=> this.handleRowClick(driverLink)} key={i}>
+                                                <tr className="linkTable clickable" onClick={()=> this.handleRowClick(driverLink)} key={i}>
                                                     <td>{i + 1}</td>
                                                     <td>{time.tim_driverName}</td>
                                                     {/* <td className="only-desktop"><img src={time.car_img} /></td> */}
@@ -135,14 +144,13 @@ class ServerLeaderboard extends Component {
 
                                     {
                                         this.state.notValidTimes.map((time, i) => {
-
                                             let serverName = (window.location.href).split("/")[4];
                                             let track = (window.location.href).split("/")[5];
                                             serverName = serverName.split("#")[0];
                                             track = track.split("#")[0];
                                             let driverLink = "/serverDetail/" + serverName + "/" + track + "/" + time.tim_driverName;
                                             return (
-                                                <tr className="linkTable" onClick={()=> this.handleRowClick(driverLink)} key={i}>
+                                                <tr className="linkTable"  key={i}>
                                                     <td><span className="baseEle">-</span></td>
                                                     <td><span className="baseEle">{time.tim_driverName}</span></td>
                                                     {/* <td className="only-desktop"><img src={time.car_img} /></td> */}
@@ -155,7 +163,7 @@ class ServerLeaderboard extends Component {
                                                         if (count.tim_driverName === time.tim_driverName) {
                                                             return count.tim_validCount < 40 ? <span className="personalBestEle">{count.tim_validCount}</span> : <span className="baseEle">{count.tim_validCount}</span>;
                                                         }
-                                                    })}/40</td>
+                                                    })}</td>
                                                     <td><span className="baseEle">-</span>{/* {Base.getGap((this.state.bestTime * 1000), (time.tim_totalTime * 1000))} */}</td>
                                                 </tr>
                                             )

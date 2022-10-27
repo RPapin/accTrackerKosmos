@@ -1,4 +1,5 @@
 {
+    
     "header" : {
         "admin" : "Admin area"
     },
@@ -48,7 +49,7 @@
         "weatherType": "WEATHER TYPE"
     },
     "sessionDetail" : {
-        "lapsOf" : "LAPS OF",
+        "laps" : "LAPS OF",
         "avgSpeed" : "AVERAGE SPEED (FL)",
         "gapToFirst" : "GAP FROM THE FIRST",
         "lapTrend" : "LAP TREND",

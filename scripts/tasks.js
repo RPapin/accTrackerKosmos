@@ -16,6 +16,7 @@ exports.startup = async () => {
         let j = 0;
 
         for (let session of arr) {
+            
             let idSession = database.createSession(results.getServerName(session), results.getTrackName(session), results.getWeather(session), results.getSessionType(session), arrDates[j]);
             let leaderboards = results.getFullLeaderBoard(session);
 

@@ -16,7 +16,7 @@ class Navbar extends Component {
                 </div>
                 <div className="navbar-right justify-content-end">
                     <Link to="/dashboard">
-                        <h5><i className="fas fa-user-lock"></i>{this.props.t('header.admin')}</h5>
+                        <h5><i className="fas fa-user-lock icon-admin"></i>{this.props.t('header.admin')}</h5>
                     </Link>
                 </div>
             </nav>

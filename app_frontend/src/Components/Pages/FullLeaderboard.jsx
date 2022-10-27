@@ -5,6 +5,7 @@ import Loader from '../Partials/Loader';
 import axios from 'axios';
 import Base from './../../Modules/Base';
 import { withTranslation } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
 
 class FullLeaderboard extends Component {
 
@@ -19,7 +20,9 @@ class FullLeaderboard extends Component {
             trackInfo: ""
         }
     }
-
+    handleGoBack =  (url) => {
+        this.props.history.push(url);
+    }
     componentDidMount = () => {
         window.scrollTo(0, 0);
 
@@ -28,12 +31,11 @@ class FullLeaderboard extends Component {
         document.getElementById("normalPage").style.display = "none";
         axios.post(`http://${Base.getIp()}:${Base.getPort()}/fullLeaderboard/${track[4]}`)
             .then((res) => {
-                console.log(res);
-                this.setState({ data: res.data[0], bestTime: res.data[1].tim_totalTime, totalDrivers: res.data[2].tim_driverCount, bestSessions: res.data[3], trackInfo: res.data[4] });
-                setTimeout(() => {
+                this.setState({ data: res.data[0], bestTime: res.data[1].tim_totalTime, totalDrivers: res.data[2].tim_driverCount, bestSessions: res.data[3], trackInfo: res.data[4] }, () => {
                     document.getElementById("loader").style.display = "none";
                     document.getElementById("normalPage").style.display = "block";
-                }, 1000);
+                });
+
             })
     }
 
@@ -46,6 +48,11 @@ class FullLeaderboard extends Component {
                 <div id="normalPage" className="animate__animated animate__fadeIn">
                     <Navbar />
                     <section id="sessionSection">
+                        <div className="row goBackRow">
+                            <div className="col-12">
+                                <span className="goBackBtn" onClick={() => this.handleGoBack('/')}></span>
+                            </div>
+                        </div>
                         <div id="sessionTitle">
                             <h1>{this.props.t('fullLeaderboad.title')} - {this.state.trackInfo.tra_name}</h1>
                         </div>
@@ -59,7 +66,7 @@ class FullLeaderboard extends Component {
                                         <th className="only-desktop">S2</th>
                                         <th className="only-desktop">S3</th>
                                         <th>{this.props.t('home.sessionArray.time')}</th>
-                                        <th>{this.props.t('home.sessionArray.laps')}</th>
+                                        {/* <th>{this.props.t('home.sessionArray.laps')}</th> */}
                                         <th>{this.props.t('home.sessionArray.gap')}</th>
                                     </tr>
                                 </thead>
@@ -74,7 +81,7 @@ class FullLeaderboard extends Component {
                                                     <td className="only-desktop">{(time.tim_sectorTwo === this.state.bestSessions.bestSectorTwo ? <span className="bestEle">{time.tim_sectorTwo}</span> : time.tim_sectorTwo)}</td>
                                                     <td className="only-desktop">{(time.tim_sectorTree === this.state.bestSessions.bestSectorTree ? <span className="bestEle">{time.tim_sectorTree}</span> : time.tim_sectorTree)}</td>
                                                     <td>{(time.tim_totalTime === this.state.bestDriverTime ? <span className="personalBestEle"> {Base.getFullTime((time.tim_totalTime * 1000))}</span> : Base.getFullTime((time.tim_totalTime * 1000)))}</td>
-                                                    <td className="only-desktop">6/40</td>
+                                                    {/* <td className="only-desktop">6/40</td> */}
                                                     <td>{Base.getGap((this.state.bestTime * 1000), (time.tim_totalTime * 1000))}</td>
                                                 </tr>
                                             )
@@ -124,4 +131,4 @@ class FullLeaderboard extends Component {
     }
 }
 
-export default withTranslation()(FullLeaderboard);
+export default withTranslation()(withRouter(FullLeaderboard));

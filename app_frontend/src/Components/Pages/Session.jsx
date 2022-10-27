@@ -21,7 +21,9 @@ class Session extends Component {
             bestSessions: []
         }
     }
-
+    handleGoBack =  (url) => {
+        this.props.history.push(url);
+    }
     handleRowClick = (url) => {
         this.props.history.push(url);
       }  
@@ -52,6 +54,11 @@ class Session extends Component {
                 <div id="normalPage" className="animate__animated animate__fadeIn">
                     <Navbar />
                     <section id="sessionSection">
+                        <div className="row goBackRow">
+                            <div className="col-12">
+                                <span className="goBackBtn" onClick={() => this.handleGoBack('/')}></span>
+                            </div>
+                        </div>
                         <div id="sessionTitle">
                             <h1>{this.props.t('session.timetable')}</h1>
                         </div>

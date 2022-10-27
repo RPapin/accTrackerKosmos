@@ -18,7 +18,6 @@ class ManageServer extends Component {
         axios.post(`http://${Base.getIp()}:${Base.getPort()}/manageServer`)
             .then(res => {
                 this.setState({ arrayPath: res.data });
-                console.log(this.state.arrayPath[0])
             })
     }
 

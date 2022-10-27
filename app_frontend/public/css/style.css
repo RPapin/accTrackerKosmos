@@ -323,6 +323,10 @@ canvas {
     padding: 0;
 }
 
+#trackTitle {
+    width: 30%;
+    padding: 0;
+}
 #flagTitle {
     width: 20%;
     padding: 0;
@@ -651,4 +655,28 @@ ul {
 #editSserverModal {
     border: 1px solid #fff;
     box-shadow: 0 0 20px rgb(102, 102, 102);
+}
+.clickable:hover {
+    cursor: pointer;
+}
+.goBackBtn {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-bottom: 5px solid #fff;
+    border-right: 5px solid #fff;
+    transform: rotate(135deg);
+    cursor: pointer;
+    
+}
+.goBackBtn:hover {
+    border-bottom: 5px solid #8b0000;
+    border-right: 5px solid #8b0000;
+}
+.goBackRow {
+    width: 90%;
+    margin-bottom: 2rem
+}
+.icon-admin {
+    margin-right: 0.8rem;
 }

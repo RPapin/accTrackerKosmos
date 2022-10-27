@@ -1,10 +1,22 @@
-Performance !
-Translation
-Logo
-Full logo circuit cf drive
+mettre en rouge tant que pas objectif, variable a définir
+serverLeaderboard => Premiere ligne centré nom => en dessous 3 colonnes
+Server Détail => Valid En vert, meilleur tour en violet
+Liste Server => Trier Par odre chrono => double dans la date, rajouter la classe et Nom du circuit
+
 Footer 
 
 Check valid weird
-mettre en rouge tant que pas objectif, variable a définir
+
 Dans le serverDetail mettre l'objectif de tour et le nombre de tour
 Agrandir circuit 
+
+Done :
+Trait dans liste des sessions
+Date format français
+ServerNom - Nom Circuit - Circuit_logo - Drapeau
+Retour en Arrière
+Logo Admin dans le A
+Bug quand 0 tour valide = wrong avg + /40 => Plus possible de cliquer
+Check valid dans serverDetail
+
+Nombre de tour faux dans fullLeaderboard => Suppression de la colonne + pas possible de cliquer pour détail

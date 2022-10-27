@@ -6,6 +6,7 @@ import Base from './../../Modules/Base';
 import ChartJS from './../../Modules/Chart';
 import Loader from '../Partials/Loader';
 import { withTranslation } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
 
 class Chart extends Component {
 
@@ -20,7 +21,9 @@ class Chart extends Component {
             bestDriverTime: 0,
         }
     }
-
+    handleGoBack =  (url) => {
+        this.props.history.push(url);
+    }
     componentDidMount = () => {
         document.getElementById("normalPage").style.display = "none";
         window.scrollTo(0, 0);
@@ -47,6 +50,11 @@ class Chart extends Component {
                 <div id="normalPage">
                     <section id="sessionDetailSection">
                         <Navbar />
+                        <div className="row goBackRow">
+                            <div className="col-12">
+                                <span className="goBackBtn" onClick={() => this.handleGoBack('/')}></span>
+                            </div>
+                        </div>
                         <div id="sessionTitle">
                             <h1>{this.props.t('sessionDetail.lapsOf')} <span className="baseEle">{this.state.driverName}</span></h1>
                         </div>
@@ -128,4 +136,4 @@ class Chart extends Component {
     }
 }
 
-export default withTranslation()(Chart);
+export default withTranslation()(withRouter(Chart));

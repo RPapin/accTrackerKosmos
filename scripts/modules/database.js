@@ -5,14 +5,15 @@ const sqlite = require('better-sqlite3');
 
 exports.createSession = (server, track, weatherValue, sessionType, dataCreation) => {
     const db = new sqlite(pathDb);
-
+    
+    const date = new Date(dataCreation).getTime();
     track = results.fixTrackYear(track);
 
     let stmt = db.prepare(`INSERT OR IGNORE INTO Sessions VALUES(NULL, ?, ?, ?, ?, ?)`);
-    stmt.run(server, track, weatherValue, sessionType, dataCreation.toString());
+    stmt.run(server, track, weatherValue, sessionType, date);
 
     stmt = db.prepare(`SELECT ses_id FROM Sessions WHERE ses_creation = ?`);
-    let lastId = stmt.get(dataCreation.toString());
+    let lastId = stmt.get(date);
 
     db.close();
 
@@ -47,26 +48,22 @@ checkACI = (driverName, time) => {
 }
 
 exports.serverCollections = () => {
-    console.log('call to servers')
     const db = new sqlite(pathDb);
 
     let stmt = db.prepare(`SELECT * FROM Sessions INNER JOIN Tracks ON ses_track = tra_nameCode INNER JOIN Times on tim_sessionId = ses_id GROUP BY ses_serverName, ses_track, ses_weather ORDER BY ses_weather ASC`);
     let servers = stmt.all();
 
     db.close();
-    console.log('finish servers')
     return servers;
 }
 
 exports.sessionCollections = () => {
-    console.log('call to collections')
     const db = new sqlite(pathDb);
 
     let stmt = db.prepare(`SELECT * FROM Sessions INNER JOIN Tracks ON ses_track = tra_nameCode INNER JOIN Times ON tim_sessionId = ses_id GROUP BY  ses_id`);
     let sessions = stmt.all();
 
     db.close();
-    console.log('finish collections')
     return sessions;
 }
 
@@ -106,6 +103,7 @@ exports.driverDetail = (sessionId, driverName) => {
     let times = stmt.all(sessionId, driverName);
 
     stmt = db.prepare(`SELECT * FROM (SELECT tra_km, sum(tim_sectorOne + tim_sectorTwo + tim_sectorTree) as tim_totalTime FROM Times INNER JOIN Sessions ON ses_id = tim_sessionId INNER JOIN Tracks ON ses_track = tra_nameCode WHERE ses_id = ? AND tim_driverName = ? GROUP BY tim_driverName, tim_sectorOne, tim_sectorTwo, tim_sectorTree ORDER BY tim_totalTime ASC LIMIT 1) ORDER BY tim_totalTime ASC`);
+    
     let avgSpeed = (timeParse.getAvg(stmt.get(sessionId, driverName))).toFixed(3);
 
     stmt = db.prepare(`SELECT * FROM (SELECT sum(tim_sectorOne + tim_sectorTwo + tim_sectorTree) as tim_totalTime FROM Times INNER JOIN Sessions ON ses_id = tim_sessionId WHERE ses_id = ?  GROUP BY tim_driverName, tim_sectorOne, tim_sectorTwo, tim_sectorTree)ORDER BY tim_totalTime ASC LIMIT 1;`);
@@ -120,14 +118,12 @@ exports.driverDetail = (sessionId, driverName) => {
 }
 
 exports.getAllTracks = () => {
-    console.log('call to getAllTracks')
     const db = new sqlite(pathDb);
 
     let stmt = db.prepare(`SELECT tra_name, tra_nameCode, tra_flag, tra_track FROM Sessions INNER JOIN Tracks ON ses_track = tra_nameCode INNER JOIN Times ON tim_sessionId = ses_id GROUP BY tra_name`);
     let tracks = stmt.all();
 
     db.close();
-    console.log('finish getAllTracks')
     return tracks;
 }
 
@@ -183,7 +179,7 @@ exports.serverLeaderboard = (server, track) => {
     stmt = db.prepare(`SELECT tim_driverName, count(tim_driverName) as tim_validCount FROM Times INNER JOIN Sessions ON tim_sessionId = ses_id WHERE ses_serverName = ? AND ses_track = ? AND tim_isValid = -1 GROUP BY tim_drivername`);
     let validsCount = stmt.all(server, track);
     //For all who havn't made one valid lap
-    stmt = db.prepare(`SELECT * FROM (SELECT *, sum(tim_sectorOne + tim_sectorTwo + tim_sectorTree) as tim_totalTime FROM Times INNER JOIN Cars on tim_carModel = car_id INNER JOIN Sessions ON ses_id = tim_sessionId WHERE ses_serverName = ? AND ses_track = ? AND tim_aciValid=-1 GROUP BY tim_driverName, tim_sectorOne, tim_sectorTwo, tim_sectorTree ORDER BY tim_totalTime ASC) GROUP BY tim_driverName HAVING tim_isValid = 0 ORDER BY tim_totalTime ASC;`);
+    stmt = db.prepare(`SELECT * FROM (SELECT *, sum(tim_sectorOne + tim_sectorTwo + tim_sectorTree) as tim_totalTime FROM Times INNER JOIN Cars on tim_carModel = car_id INNER JOIN Sessions ON ses_id = tim_sessionId WHERE ses_serverName = ? AND ses_track = ? GROUP BY tim_driverName, tim_sectorOne, tim_sectorTwo, tim_sectorTree ORDER BY tim_totalTime ASC) GROUP BY tim_driverName HAVING max(case when tim_isValid = -1 then 1 else 0 end )= 0 ORDER BY tim_totalTime ASC;`);
     let notValidTimes = stmt.all(server, track);
     //count all laps
     stmt = db.prepare(`SELECT tim_driverName, count(tim_driverName) as tim_totalCount FROM Times INNER JOIN Sessions ON tim_sessionId = ses_id WHERE ses_serverName = ? AND ses_track = ? GROUP BY tim_drivername`);

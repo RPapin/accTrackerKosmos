@@ -7,6 +7,7 @@ import Base from './../../Modules/Base';
 import ChartJS from './../../Modules/Chart';
 import { VALID_LAPS_TARGET } from '../../constant';
 import { withTranslation } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
 
 class ServerDetail extends Component {
 
@@ -20,8 +21,12 @@ class ServerDetail extends Component {
             bestTime: 0,
             avgSpeed: 0,
             totalLaps: 0,
-            bestSectors: []
+            bestSectors: [],
+            urlLeaderboard: ""
         }
+    }
+    handleGoBack =  (url) => {
+        this.props.history.push(url);
     }
     displayAll = () => {
         document.getElementById("loader").style.display = "none";
@@ -29,17 +34,14 @@ class ServerDetail extends Component {
     }
     componentDidMount = () => {
         window.scrollTo(0, 0);
-
         const serverName = window.location.href.split("/")[4];
         const track = window.location.href.split("/")[5];
         const driverName = window.location.href.split("/")[6];
-
+        const urlLeaderboard = "/serverLeaderboard/" + serverName + "/" + track;
         document.getElementById("normalPage").style.display = "none";
-        console.log('call to' +  `http://${Base.getIp()}:${Base.getPort()}/serverDetail/${serverName}/${track}/${driverName}`);
         axios.post(`http://${Base.getIp()}:${Base.getPort()}/serverDetail/${serverName}/${track}/${driverName}`)
             .then(res => {
-                console.log('res')
-                this.setState({ bestDriverTime: res.data[0], bestTime: res.data[1], times: res.data[2], avgSpeed: res.data[3], totalLaps: res.data[4], bestSectors: res.data[5] },
+                this.setState({ bestDriverTime: res.data[0], bestTime: res.data[1], times: res.data[2], avgSpeed: res.data[3], totalLaps: res.data[4], bestSectors: res.data[5], urlLeaderboard },
                     this.displayAll)
                 ChartJS.lineChartAvg("laps", this.state.times);
             });
@@ -54,6 +56,11 @@ class ServerDetail extends Component {
                 <div id="normalPage">
                     <Navbar />
                     <section id="sessionDetailSection">
+                    <div className="row goBackRow">
+                            <div className="col-12">
+                                <span className="goBackBtn" onClick={() => this.handleGoBack(this.state.urlLeaderboard)}></span>
+                            </div>
+                        </div>
                         <div className="card animate__animated animate__fadeIn">
                             <div className="row">
                                 <div className="col-12">
@@ -88,7 +95,7 @@ class ServerDetail extends Component {
                                     <div className="card-body">
                                         <div className="row">
                                             <div className="col-12 col-md-4">
-                                                <h3>{this.props.t('serverDetail.pbtime')}: {this.state.bestDriverTime.tim_totalTime === this.state.bestTime.tim_totalTime ? <span className="bestEle">{Base.getFullTime(this.state.bestDriverTime.tim_totalTime * 1000)}</span> : <span>{Base.getFullTime(this.state.bestDriverTime.tim_totalTime * 1000)}</span>}</h3>
+                                                <h3>{this.props.t('serverDetail.pbTime')}: {this.state.bestDriverTime.tim_totalTime === this.state.bestTime.tim_totalTime ? <span className="bestEle">{Base.getFullTime(this.state.bestDriverTime.tim_totalTime * 1000)}</span> : <span>{Base.getFullTime(this.state.bestDriverTime.tim_totalTime * 1000)}</span>}</h3>
                                             </div>
                                             <div className="col-12 col-md-4">
                                                 <h3>{this.props.t('serverDetail.avgSpeed')}: <span>{this.state.avgSpeed}</span> Km/h</h3>
@@ -119,7 +126,7 @@ class ServerDetail extends Component {
                         <div id="sessionTitle">
                             <i className="fas fa-poll-h"></i>
                             <hr />
-                            <h1>LAPS OF <span className="baseEle">{(((window.location.href).split("/")[6]).replaceAll("%20", " ")).split("#")[0]}</span></h1>
+                            <h1>{this.props.t('serverDetail.laps')} <span className="baseEle">{(((window.location.href).split("/")[6]).replaceAll("%20", " ")).split("#")[0]}</span></h1>
                         </div>
                         <div id="sessionContainer">
                             <table id="sessionList">
@@ -144,7 +151,7 @@ class ServerDetail extends Component {
                                                     <td className="only-desktop">{time.tim_sectorTwo}</td>
                                                     <td className="only-desktop">{time.tim_sectorTree}</td>
                                                     <td><span className={(time.tim_isValid === 0 ? "baseEle" : "")}>{Base.getFullTime((time.tim_totalTime * 1000))}</span></td>
-                                                    <td>{(time.tim_aciValid === -1 ? <i class="fa-solid fa-circle-check bestEle"></i> : <i class="fa-solid fa-circle-xmark baseEle"></i>)}</td>
+                                                    <td>{(time.tim_isValid === -1 ? <i className="fa-solid fa-circle-check bestEle"></i> : <i className="fa-solid fa-circle-xmark baseEle"></i>)}</td>
                                                 </tr>
                                             )
                                         })
@@ -178,4 +185,4 @@ class ServerDetail extends Component {
     }
 }
 
-export default withTranslation()(ServerDetail);
+export default withTranslation()(withRouter(ServerDetail));

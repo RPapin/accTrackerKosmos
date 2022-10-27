@@ -7,6 +7,7 @@ import Base from '../../Modules/Base';
 import axios from 'axios';
 import Update from '../Private/Modals/Update';
 import { withTranslation } from 'react-i18next';
+import { DateTime } from "luxon";
 
 class App extends Component {
 
@@ -27,12 +28,8 @@ class App extends Component {
         window.scrollTo(0, 0);
         document.title = "Vtracker";
         document.getElementById("normalPage").style.display = "none";
-        console.log('call to ')
-        console.log(`http://${Base.getIp()}:${Base.getPort()}`)
         axios.post(`http://${Base.getIp()}:${Base.getPort()}`)
             .then((res) => {
-                console.log('res')
-                console.log(res)
                 this.setState({ servers: res.data.servers, data: res.data.sessions, tracks: res.data.tracks });
                 document.getElementById("loader").style.display = "none";
                 document.getElementById("normalPage").style.display = "block";
@@ -137,12 +134,14 @@ class App extends Component {
                                 <tbody>
                                     {
                                         this.state.data.map((session, i) => {
+                                            const dt = DateTime.fromMillis(session.ses_creation)
+                                            const dateToDisplay = dt.toLocaleString(DateTime.DATETIME_MED);
                                             return (
                                                 <tr className="linkTable" onClick={()=> this.handleRowClick(`session/${session.ses_id}`)} key={i}>
                                                     
                                                     <td>{session.ses_serverName}</td>
-                                                    <td>{session.ses_creation.split("GMT")[0]}</td>
-                                                    <td><img className="only-desktop" src={session.tra_flag} alt="" /> <span className="only-desktop">|</span> <img src={session.tra_track} /></td>
+                                                    <td>{dateToDisplay}</td>
+                                                    <td><img className="only-desktop" src={session.tra_flag} alt="" /> <span className="only-desktop"></span> <img src={session.tra_track} /></td>
                                                     <td className="only-desktop"> {(session.ses_weather < 0.1 ? <i className="fas fa-sun"></i> : <i className="fas fa-cloud-rain"></i>)} </td>
                                                     <td className="only-desktop">{session.ses_type}</td>
                                                 </tr>
