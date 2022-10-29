@@ -140,7 +140,7 @@ class App extends Component {
                                                     
                                                     <td>{session.ses_serverName}</td>
                                                     <td>{dateToDisplay}</td>
-                                                    <td><img className="only-desktop" src={session.tra_flag} alt="" /> <span className="only-desktop"></span> <img src={session.tra_track} /></td>
+                                                    <td><span className="only-desktop">{session.tra_name}</span> <img className='only-mobile' src={session.tra_track} /></td>
                                                     <td className="only-desktop"> {(session.ses_weather < 0.1 ? <i className="fas fa-sun"></i> : <i className="fas fa-cloud-rain"></i>)} </td>
                                                     <td className="only-desktop">{session.ses_type}</td>
                                                 </tr>
