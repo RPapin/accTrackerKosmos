@@ -26,35 +26,35 @@
         "game" : "Game"
     },
     "fullLeaderboad" : {
-        "title" : "FULL LEADERBOARD",
-        "optimalTime" : "OPTIMAL TIME",
-        "details" : "DETAILS",
-        "bestTime" : "BEST TIME SESSION",
-        "totalDrivers" : "TOTAL DRIVERS",
-        "bestCar" : "BEST CAR"
+        "title" : "Full Leaderboad",
+        "optimalTime" : "Optimal Time",
+        "details" : "Details",
+        "bestTime" : "Best Time Session",
+        "totalDrivers" : "Total Drivers",
+        "bestCar" : "Best Car"
     },
     "serverLeaderboard" : {
         "stats" : "Stats",
-        "gapToFirst" : "GAP FROM THE FIRST DRIVER",
+        "gapToFirst" : "Gap From The First Driver",
         "graphicalRepresentation": "Graphical representation of the gap between the first driver and all of the following",
-        "usedCars": "USED CARS",
+        "usedCars": "Used Cars",
         "graphicalRepresentationNumbersCars": "Graphical representation of the number of cars used grouped by models"
     },
     "session" : {
-        "timetable": "TIMETABLE",
-        "weatherType": "WEATHER TYPE"
+        "timetable": "Timetable",
+        "weatherType": "Weather Type"
     },
     "sessionDetail" : {
-        "laps" : "LAPS OF",
-        "avgSpeed" : "AVERAGE SPEED (FL)",
-        "gapToFirst" : "GAP FROM THE FIRST",
-        "lapTrend" : "LAP TREND",
+        "laps" : "Laps Of",
+        "avgSpeed" : "Average Speed (FL)",
+        "gapToFirst" : "Gap From The First",
+        "lapTrend" : "Lap Trend",
         "graphDriverPerf" : "Graphical representation of the performance of the driver's laps during server sessions.",
         "whiteLine" : "The white line represents the average of the previous laps",
         "driverName" : "Driver Name",
         "gapToBest" : "Gap to best time",
-        "pbTime" : "PB TIME",
-        "totalLaps" : "TOTAL LAPS"
+        "pbTime" : "PB Time",
+        "totalLaps" : "Total Laps"
     },
     "previous": "Previous",
     "next": "Next"
