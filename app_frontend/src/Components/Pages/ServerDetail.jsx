@@ -30,7 +30,6 @@ class ServerDetail extends Component {
         this.props.history.push(url);
     }
     displayAll = () => {
-        console.log(this.state)
         document.getElementById("loader").style.display = "none";
         document.getElementById("normalPage").style.display = "block";
     }
@@ -59,12 +58,17 @@ class ServerDetail extends Component {
                 <div id="normalPage">
                     <Navbar />
                     <section id="sessionDetailSection">
-                    <div className="row goBackRow">
+                        <div className="row goBackRow only-desktop">
                             <div className="col-12">
                                 <span className="goBackBtn" onClick={() => this.handleGoBack(this.state.urlLeaderboard)}></span>
                             </div>
                         </div>
                         <div className="card animate__animated animate__fadeIn">
+                            <div className="row goBackRow only-mobile">
+                                <div className="col-12">
+                                    <span className="goBackBtn" onClick={() => this.handleGoBack(this.state.urlLeaderboard)}></span>
+                                </div>
+                            </div>
                             <div className="row">
                                 <div className="col-12">
                                     <div className="card-body">
@@ -83,12 +87,12 @@ class ServerDetail extends Component {
                                             <div className="col-6 col-md-3 ">
                                                 <span id="drivername">{(((window.location.href).split("/")[6]).replace("%20", " ")).split("#")[0]}</span>
                                                 <hr />
-                                                <span className="baseEle">{this.props.t('serverDetail.driverName')}</span>
+                                                <span className="baseEle">{this.props.t('sessionDetail.driverName')}</span>
                                             </div>
                                             <div className="col-6 col-md-3">
                                                 <span id="drivername">{Base.getGap((this.state.bestDriverTime.tim_totalTime * 1000), (this.state.bestTime.tim_totalTime * 1000))}</span>
                                                 <hr />
-                                                <span className="baseEle">{this.props.t('serverDetail.gapToBest')}</span>
+                                                <span className="baseEle">{this.props.t('sessionDetail.gapToBest')}</span>
                                             </div>
                                             <div className="col-md-3"></div>
                                         </div>
@@ -98,13 +102,13 @@ class ServerDetail extends Component {
                                     <div className="card-body">
                                         <div className="row">
                                             <div className="col-12 col-md-4">
-                                                <h3>{this.props.t('serverDetail.pbTime')}: {this.state.bestDriverTime.tim_totalTime === this.state.bestTime.tim_totalTime ? <span className="bestEle">{Base.getFullTime(this.state.bestDriverTime.tim_totalTime * 1000)}</span> : <span>{Base.getFullTime(this.state.bestDriverTime.tim_totalTime * 1000)}</span>}</h3>
+                                                <h3>{this.props.t('sessionDetail.pbTime')}: {this.state.bestDriverTime.tim_totalTime === this.state.bestTime.tim_totalTime ? <span className="bestEle">{Base.getFullTime(this.state.bestDriverTime.tim_totalTime * 1000)}</span> : <span>{Base.getFullTime(this.state.bestDriverTime.tim_totalTime * 1000)}</span>}</h3>
                                             </div>
                                             <div className="col-12 col-md-4">
-                                                <h3>{this.props.t('serverDetail.avgSpeed')}: <span>{this.state.avgSpeed}</span> Km/h</h3>
+                                                <h3>{this.props.t('sessionDetail.avgSpeed')}: <span>{this.state.avgSpeed}</span> Km/h</h3>
                                             </div>
                                             <div className="col-12 col-md-4">
-                                                <h3>{this.props.t('serverDetail.totalLaps')}: {this.state.totalValidLaps.tim_driverCount >= VALID_LAPS_TARGET ? <span className="personalBestEle">{this.state.totalValidLaps.tim_driverCount}</span> : <span className="baseEle">{this.state.totalValidLaps.tim_driverCount}</span>} / {VALID_LAPS_TARGET}</h3>
+                                                <h3>{this.props.t('sessionDetail.totalLaps')}: {this.state.totalValidLaps.tim_driverCount >= VALID_LAPS_TARGET ? <span className="personalBestEle">{this.state.totalValidLaps.tim_driverCount}</span> : <span className="baseEle">{this.state.totalValidLaps.tim_driverCount}</span>} / {VALID_LAPS_TARGET}</h3>
                                             </div>
                                         </div>
                                         <hr />
@@ -147,7 +151,7 @@ class ServerDetail extends Component {
                                     {
 
                                         this.state.times.map((time, i) => {
-                                            
+
                                             return (
                                                 <tr className={(time.tim_totalTime === this.state.bestDriverTime.tim_totalTime ? "bestTr" : "")} key={i}>
                                                     <td id="lapCount">{i + 1}</td>
