@@ -1,7 +1,7 @@
 {
     
     "header" : {
-        "admin" : "Admin area"
+        "admin" : "Admin"
     },
     "home" : {
         "serverList" : "Server List",

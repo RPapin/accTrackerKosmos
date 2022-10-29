@@ -19,25 +19,28 @@ class Chart extends Component {
             avgSpeed: 0,
             bestTime: 0,
             bestDriverTime: 0,
+            urlLeaderboard: ""
         }
     }
     handleGoBack =  (url) => {
         this.props.history.push(url);
+    }
+    displayAll = () => {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("normalPage").style.display = "block";
     }
     componentDidMount = () => {
         document.getElementById("normalPage").style.display = "none";
         window.scrollTo(0, 0);
         let sesId = (window.location.href).split("/")[4];
         let driverId = (window.location.href).split("/")[5];
-
+        const urlLeaderboard = "/session/" + sesId;
         axios.post(`http://${Base.getIp()}:${Base.getPort()}/session/${sesId}/${driverId}`)
             .then((res) => {
-                this.setState({ times: res.data[0], avgSpeed: res.data[1], bestTime: res.data[2], bestDriverTime: res.data[3] });
+                this.setState({ times: res.data[0], avgSpeed: res.data[1], bestTime: res.data[2], bestDriverTime: res.data[3], urlLeaderboard },
+                    this.displayAll);
                 ChartJS.lineChartAvg("laps", this.state.times);
-                setTimeout(() => {
-                    document.getElementById("loader").style.display = "none";
-                    document.getElementById("normalPage").style.display = "block";
-                }, 1000);
+
             })
     }
 
@@ -52,7 +55,7 @@ class Chart extends Component {
                         <Navbar />
                         <div className="row goBackRow">
                             <div className="col-12">
-                                <span className="goBackBtn" onClick={() => this.handleGoBack('/')}></span>
+                                <span className="goBackBtn" onClick={() => this.handleGoBack(this.state.urlLeaderboard)}></span>
                             </div>
                         </div>
                         <div id="sessionTitle">

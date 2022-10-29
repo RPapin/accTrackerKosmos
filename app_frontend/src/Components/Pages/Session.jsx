@@ -26,8 +26,11 @@ class Session extends Component {
     }
     handleRowClick = (url) => {
         this.props.history.push(url);
-      }  
-
+    }  
+    displayAll = () => {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("normalPage").style.display = "block";
+    }
     componentDidMount = () => {
         window.scrollTo(0, 0);
         let id = (window.location.href).split("/")[4];
@@ -36,11 +39,8 @@ class Session extends Component {
         document.getElementById("normalPage").style.display = "none";
         axios.post(`http://${Base.getIp()}:${Base.getPort()}/session/${id}`)
             .then(res => {
-                this.setState({ data: res.data[0], serverName: res.data[1][0].ses_serverName, weatherValue: res.data[1][0].ses_weather, totalDrivers: res.data[1][1].tim_driverCount, bestTime: res.data[1][2].tim_totalTime, bestSessions: res.data[1][3] });
-                setTimeout(() => {
-                    document.getElementById("loader").style.display = "none";
-                    document.getElementById("normalPage").style.display = "block";
-                }, 1000);
+                this.setState({ data: res.data[0], serverName: res.data[1][0].ses_serverName, weatherValue: res.data[1][0].ses_weather, totalDrivers: res.data[1][1].tim_driverCount, bestTime: res.data[1][2].tim_totalTime, bestSessions: res.data[1][3] },
+                    this.displayAll);
             })
 
     }
