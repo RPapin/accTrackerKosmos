@@ -26,7 +26,6 @@ class App extends Component {
 
     componentDidMount = () => {
         window.scrollTo(0, 0);
-        document.title = "Vtracker";
         document.getElementById("normalPage").style.display = "none";
         axios.post(`http://${Base.getIp()}:${Base.getPort()}`)
             .then((res) => {
