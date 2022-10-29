@@ -86,6 +86,9 @@ and (max-width : 768px) {
     #sessionList th {
         padding: 20px;
     }
+    .logo-img {
+        width: 5em;
+    }
 }
 
 /* Tablet */

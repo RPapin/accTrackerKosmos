@@ -8,8 +8,7 @@ class Navbar extends Component {
         return (
             <nav className="navbar fixed-top" id='custom-navbar'> 
                 <Link to="/">
-                    {/* <img className="navbar-brand" src="/img/helmet.png" alt="logo" /> */}
-                    Kosmos Racing Team
+                    <img className="navbar-brand logo-img" src="/img/logo_KMR_blanc_crop.png" alt="logo" />
                 </Link>
                 <div className="navbar justify-content-center">
                     <LanguageSwitcher />
