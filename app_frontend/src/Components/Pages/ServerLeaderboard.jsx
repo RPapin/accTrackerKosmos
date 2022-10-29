@@ -7,6 +7,7 @@ import Chart from './../../Modules/Chart';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
+import { VALID_LAPS_TARGET } from '../../constant';
 
 class ServerLeaderboard extends Component {
 
@@ -70,30 +71,35 @@ class ServerLeaderboard extends Component {
                 <div id="normalPage">
                     <Navbar />
                     <section id="serverSection">
-                        <div className="row goBackRow">
+                        {/* <div className="row ">
                             <div className="col-12">
+                                
+                            </div>
+                        </div> */}
+                        <div className="row">
+                            <div className="col">
                                 <span className="goBackBtn" onClick={() => this.handleGoBack('/')}></span>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-6">
-                                <div className="row">
-     
-                                    <div className="col-12 col-md-6">
-                                        <h3 id="serverInfo"> {this.state.trackInfo.tra_name}</h3>
-                                    </div>
-                                    <div className="col-12 col-md-6">
-                                        <h3 id="serverInfo"> {this.state.trackInfo.ses_serverName}</h3>
-                                    </div>
-                                </div>
+                            <div className="col-md-12 only-desktop">
+                                
+                                <h1 className="serverInfo" id='serverName'> {this.state.trackInfo.ses_serverName}</h1>
                             </div>
-                            <div className="col-md-3 only-desktop">
+                        </div>
+                        <div className="row full-w">
+                            <div className="col-6 only-mobile">
+                                <h3 className="serverInfo"> {this.state.trackInfo.ses_serverName}</h3>
+                            </div>
+                            <div className="col-6 col-md-4">
+                                <h3 className="serverInfo"> {this.state.trackInfo.tra_name}</h3>
+                            </div>
+                            <div className="col-md-4 only-desktop">
                                 <img id="trackTitle" src={this.state.trackInfo.tra_track} alt="" />
                             </div>
-                            <div className="col-md-3 only-desktop">
+                            <div className="col-md-4 only-desktop">
                                 <img id="flagTitle" src={this.state.trackInfo.tra_flag} alt="" />
                             </div>
                         </div>
+
                         <div id="sessionContainer">
                             <table id="sessionList">
                                 <thead>
@@ -133,7 +139,8 @@ class ServerLeaderboard extends Component {
                                                         
                                                         if (count.tim_driverName === time.tim_driverName) {
                                                             const allLaps = this.state.allLapsCount.find(x => x.tim_driverName === count.tim_driverName)
-                                                            return <><span className="personalBestEle">{count.tim_validCount}</span> / {allLaps.tim_totalCount}</>;
+                                                            const classColor = count.tim_validCount < VALID_LAPS_TARGET ? "baseEle" : "personalBestEle";
+                                                            return <><span className={classColor}>{count.tim_validCount}</span> / {allLaps.tim_totalCount}</>;
                                                         }
                                                     })}</td>
                                                     <td>{Base.getGap((this.state.bestTime * 1000), (time.tim_totalTime * 1000))}</td>
@@ -208,16 +215,16 @@ class ServerLeaderboard extends Component {
                                 </div>
                                 <div className="col-lg-1"></div>
                             </div>
-                            {/*                             <br /><br />
+                                                        <br /><br />
                             <div className="row">
                                 <div className="col-lg-3"></div>
                                 <div className="col-12col-lg-6">
                                     <h1>{this.state.bestCarAvg.car_name}</h1>
                                     <hr />
-                                    <h3 id="statSession">BEST CAR</h3>
+                                    <h3 id="statSession">{this.props.t('fullLeaderboad.bestCar')}</h3>
                                 </div>
                                 <div className="col-lg-3"></div>
-                            </div> */}
+                            </div>
                         </div>
                     </section>
                     <section id="chartSection">

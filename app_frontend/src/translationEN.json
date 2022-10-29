@@ -16,7 +16,9 @@
             "gap" : "Gap",
             "laps" : "Laps",
             "time" : "Time",
-            "car" : "Car"
+            "car" : "Car",
+            "lap" : "Lap",
+            "valid": "Valid"
         }
     },
     "footer" : {
@@ -28,7 +30,8 @@
         "optimalTime" : "OPTIMAL TIME",
         "details" : "DETAILS",
         "bestTime" : "BEST TIME SESSION",
-        "totalDrivers" : "TOTAL DRIVERS"
+        "totalDrivers" : "TOTAL DRIVERS",
+        "bestCar" : "BEST CAR"
     },
     "serverDetail" : {
         "driverName" : "Driver Name",

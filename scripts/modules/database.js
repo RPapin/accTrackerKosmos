@@ -60,7 +60,7 @@ exports.serverCollections = () => {
 exports.sessionCollections = () => {
     const db = new sqlite(pathDb);
 
-    let stmt = db.prepare(`SELECT * FROM Sessions INNER JOIN Tracks ON ses_track = tra_nameCode INNER JOIN Times ON tim_sessionId = ses_id GROUP BY  ses_id`);
+    let stmt = db.prepare(`SELECT * FROM Sessions INNER JOIN Tracks ON ses_track = tra_nameCode INNER JOIN Times ON tim_sessionId = ses_id GROUP BY ses_id ORDER BY ses_creation DESC`);
     let sessions = stmt.all();
 
     db.close();
@@ -211,7 +211,10 @@ exports.serverDetail = (server, track, driverName) => {
     stmt = db.prepare(`SELECT min(tim_sectorOne) as bestSectorOne, min(tim_sectorTwo) as bestSectorTwo, min(tim_sectorTree) as bestSectorTree FROM (SELECT * FROM (SELECT *, sum(tim_sectorOne + tim_sectorTwo + tim_sectorTree) as tim_totalTime FROM Times INNER JOIN Sessions ON ses_id = tim_sessionId WHERE ses_serverName = ? AND ses_track = ? AND tim_isValid = -1 AND tim_aciValid=-1 GROUP BY tim_driverName, tim_sectorOne, tim_sectorTwo, tim_sectorTree ORDER BY tim_totalTime ASC) GROUP BY tim_driverName ORDER BY tim_totalTime ASC);`);
     let bestSectors = stmt.get(server, track);
 
-    return [bestDriverTime, bestDriver, times, avgSpeed, driverCount, bestSectors];
+    stmt = db.prepare(`SELECT count(tim_driverName) as tim_driverCount FROM (SELECT tim_driverName FROM Times INNER JOIN Sessions ON tim_sessionId = ses_id WHERE ses_serverName = ? AND ses_track = ? AND tim_driverName = ? AND tim_isValid = -1);`);
+    let driverCountValid = stmt.get(server, track, driverName);
+
+    return [bestDriverTime, bestDriver, times, avgSpeed, driverCount, bestSectors, driverCountValid];
 }
 
 exports.resetDB = () => {

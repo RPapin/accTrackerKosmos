@@ -21,6 +21,7 @@ class ServerDetail extends Component {
             bestTime: 0,
             avgSpeed: 0,
             totalLaps: 0,
+            totalValidLaps: 0,
             bestSectors: [],
             urlLeaderboard: ""
         }
@@ -29,6 +30,7 @@ class ServerDetail extends Component {
         this.props.history.push(url);
     }
     displayAll = () => {
+        console.log(this.state)
         document.getElementById("loader").style.display = "none";
         document.getElementById("normalPage").style.display = "block";
     }
@@ -41,7 +43,8 @@ class ServerDetail extends Component {
         document.getElementById("normalPage").style.display = "none";
         axios.post(`http://${Base.getIp()}:${Base.getPort()}/serverDetail/${serverName}/${track}/${driverName}`)
             .then(res => {
-                this.setState({ bestDriverTime: res.data[0], bestTime: res.data[1], times: res.data[2], avgSpeed: res.data[3], totalLaps: res.data[4], bestSectors: res.data[5], urlLeaderboard },
+                console.log(res)
+                this.setState({ bestDriverTime: res.data[0], bestTime: res.data[1], times: res.data[2], avgSpeed: res.data[3], totalLaps: res.data[4], bestSectors: res.data[5], totalValidLaps: res.data[6], urlLeaderboard },
                     this.displayAll)
                 ChartJS.lineChartAvg("laps", this.state.times);
             });
@@ -101,7 +104,7 @@ class ServerDetail extends Component {
                                                 <h3>{this.props.t('serverDetail.avgSpeed')}: <span>{this.state.avgSpeed}</span> Km/h</h3>
                                             </div>
                                             <div className="col-12 col-md-4">
-                                                <h3>{this.props.t('serverDetail.totalLaps')}: {this.state.totalLaps.tim_driverCount >= VALID_LAPS_TARGET ? <span className="baseEle">{this.state.totalLaps.tim_driverCount}</span> : <span className="personalBestEle">{this.state.totalLaps.tim_driverCount}</span>} / {VALID_LAPS_TARGET}</h3>
+                                                <h3>{this.props.t('serverDetail.totalLaps')}: {this.state.totalValidLaps.tim_driverCount >= VALID_LAPS_TARGET ? <span className="personalBestEle">{this.state.totalValidLaps.tim_driverCount}</span> : <span className="baseEle">{this.state.totalValidLaps.tim_driverCount}</span>} / {VALID_LAPS_TARGET}</h3>
                                             </div>
                                         </div>
                                         <hr />
@@ -126,24 +129,25 @@ class ServerDetail extends Component {
                         <div id="sessionTitle">
                             <i className="fas fa-poll-h"></i>
                             <hr />
-                            <h1>{this.props.t('serverDetail.laps')} <span className="baseEle">{(((window.location.href).split("/")[6]).replaceAll("%20", " ")).split("#")[0]}</span></h1>
+                            <h1>{this.props.t('sessionDetail.laps')} <span className="baseEle">{(((window.location.href).split("/")[6]).replaceAll("%20", " ")).split("#")[0]}</span></h1>
                         </div>
                         <div id="sessionContainer">
                             <table id="sessionList">
                                 <thead>
                                     <tr>
-                                        <th>Lap</th>
+                                        <th>{this.props.t('home.sessionArray.lap')}</th>
                                         <th className="only-desktop">S1</th>
                                         <th className="only-desktop">S2</th>
                                         <th className="only-desktop">S3</th>
-                                        <th>Time</th>
-                                        <th>Valid</th>
+                                        <th>{this.props.t('home.sessionArray.time')}</th>
+                                        <th>{this.props.t('home.sessionArray.valid')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {
 
                                         this.state.times.map((time, i) => {
+                                            
                                             return (
                                                 <tr className={(time.tim_totalTime === this.state.bestDriverTime.tim_totalTime ? "bestTr" : "")} key={i}>
                                                     <td id="lapCount">{i + 1}</td>
@@ -151,7 +155,7 @@ class ServerDetail extends Component {
                                                     <td className="only-desktop">{time.tim_sectorTwo}</td>
                                                     <td className="only-desktop">{time.tim_sectorTree}</td>
                                                     <td><span className={(time.tim_isValid === 0 ? "baseEle" : "")}>{Base.getFullTime((time.tim_totalTime * 1000))}</span></td>
-                                                    <td>{(time.tim_isValid === -1 ? <i className="fa-solid fa-circle-check bestEle"></i> : <i className="fa-solid fa-circle-xmark baseEle"></i>)}</td>
+                                                    <td>{(time.tim_isValid === -1 ? <i className="fa-solid fa-circle-check personalBestEle"></i> : <i className="fa-solid fa-circle-xmark baseEle"></i>)}</td>
                                                 </tr>
                                             )
                                         })
@@ -164,16 +168,16 @@ class ServerDetail extends Component {
                         <div id="sessionTitle">
                             <i className="far fa-chart-bar"></i>
                             <hr />
-                            <h3>LAP TREND:</h3>
+                            <h3>{this.props.t('sessionDetail.lapTrend')}:</h3>
                         </div>
                         <div id="chartContainer">
                             <div className="row">
                                 <div className="col-12 col-lg-12">
                                     <canvas id="laps"></canvas>
                                     <hr />
-                                    <span id="chartDescription">Graphical representation of the performance of the driver's laps during server sessions.</span>
+                                    <span id="chartDescription">{this.props.t('sessionDetail.graphDriverPerf')}</span>
                                     <br />
-                                    <span>The white line represents the average of the previous laps</span>
+                                    <span>{this.props.t('sessionDetail.whiteLine')}</span>
                                 </div>
                             </div>
                         </div>

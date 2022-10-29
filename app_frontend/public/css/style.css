@@ -97,6 +97,7 @@ footer img {
     justify-content: center;
     text-align: center;
     border-bottom: 1px solid #8b0000;
+    position: relative;
 }
 
 #homeContainer {
@@ -204,7 +205,7 @@ footer img {
 #sessionList {
     display: block;
     position: sticky; 
-    max-height: 50vh;
+    max-height: 60vh;
     overflow-y: scroll;
     width: 100%;
     text-align: center;
@@ -503,10 +504,12 @@ form input:focus {
     animation: fa-spin 2s linear infinite !important;
 }
 
-#serverSection #serverInfo {
+#serverSection .serverInfo {
     text-transform: uppercase;
 }
-
+#serverName {
+    color: #fff;
+}
 .serverHeader {
     border-bottom: 1px solid #8b0000;
 }
@@ -583,7 +586,7 @@ ul {
 }
 
 .bestTr > td{
-    color: #129e00 !important;
+    color: #9e009e !important;
     font-weight: 500;
 }
 
@@ -667,16 +670,22 @@ ul {
     border-right: 5px solid #fff;
     transform: rotate(135deg);
     cursor: pointer;
-    
+    position: absolute;
+    top: 12vh;
+    left: 6%;
 }
 .goBackBtn:hover {
     border-bottom: 5px solid #8b0000;
     border-right: 5px solid #8b0000;
 }
-.goBackRow {
-    width: 90%;
-    margin-bottom: 2rem
-}
+
 .icon-admin {
     margin-right: 0.8rem;
+}
+.full-w {
+    width: 100%;
+}
+#custom-navbar {
+    justify-content: space-around;
+    
 }

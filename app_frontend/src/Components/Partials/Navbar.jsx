@@ -6,12 +6,12 @@ import { withTranslation } from 'react-i18next';
 class Navbar extends Component {
     render = () => {
         return (
-            <nav className="navbar fixed-top">
+            <nav className="navbar fixed-top" id='custom-navbar'> 
                 <Link to="/">
                     {/* <img className="navbar-brand" src="/img/helmet.png" alt="logo" /> */}
                     Kosmos Racing Team
                 </Link>
-                <div>
+                <div className="navbar justify-content-center">
                     <LanguageSwitcher />
                 </div>
                 <div className="navbar-right justify-content-end">

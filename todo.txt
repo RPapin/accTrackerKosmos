@@ -1,14 +1,6 @@
-mettre en rouge tant que pas objectif, variable a définir
-serverLeaderboard => Premiere ligne centré nom => en dessous 3 colonnes
-Server Détail => Valid En vert, meilleur tour en violet
-Liste Server => Trier Par odre chrono => double dans la date, rajouter la classe et Nom du circuit
 
-Footer 
-
-Check valid weird
-
-Dans le serverDetail mettre l'objectif de tour et le nombre de tour
-Agrandir circuit 
+Server Détail => Meilleur sector en rose temps otimal
+Liste Server => ~~ rajouter la classe et Nom du circuit
 
 Done :
 Trait dans liste des sessions
@@ -18,5 +10,8 @@ Retour en Arrière
 Logo Admin dans le A
 Bug quand 0 tour valide = wrong avg + /40 => Plus possible de cliquer
 Check valid dans serverDetail
+serverLeaderboard => Premiere ligne centré nom => en dessous 3 colonnes
+mettre en rouge tant que pas objectif, variable a définir
+Server Détail => Valid En vert, meilleur tour en violet + Trad stat 
 
 Nombre de tour faux dans fullLeaderboard => Suppression de la colonne + pas possible de cliquer pour détail

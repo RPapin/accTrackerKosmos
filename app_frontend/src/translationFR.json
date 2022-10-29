@@ -15,7 +15,9 @@
             "gap" : "Gap",
             "laps" : "Tours",
             "time" : "Temps",
-            "car" : "Voiture"
+            "car" : "Voiture",
+            "lap" : "Tour",
+            "valid": "Valide"
         }
     },
     "footer" : {
@@ -27,7 +29,8 @@
         "optimalTime" : "Temps Optimal",
         "details" : "Détails",
         "bestTime" : "Meilleur temps de la session",
-        "totalDrivers" : "Total pilote"
+        "totalDrivers" : "Total pilote",
+        "bestCar" : "Meilleur voiture"
     },
     "serverDetail" : {
         "pbTime" : "Meilleur temps",
