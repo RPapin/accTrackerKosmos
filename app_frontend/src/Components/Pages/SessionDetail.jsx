@@ -56,7 +56,7 @@ class Chart extends Component {
                             </div>
                         </div>
                         <div id="sessionTitle">
-                            <h1>{this.props.t('sessionDetail.lapsOf')} <span className="baseEle">{this.state.driverName}</span></h1>
+                            <h1>{this.props.t('sessionDetail.laps')} <span className="baseEle">{this.state.driverName}</span></h1>
                         </div>
                         <div id="sessionContainer">
                             <table id="sessionList">

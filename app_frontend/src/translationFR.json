@@ -33,12 +33,7 @@
         "bestCar" : "Meilleur voiture"
     },
     "serverDetail" : {
-        "pbTime" : "Meilleur temps",
-        "driverName" : "Driver Name",
-        "gapToBest" : "Gap to best time",
-        
-        "avgSpeed" : "Vitesse moyenne",
-        "totalLaps" : "Tours total"
+
     },
     "serverLeaderboard" : {
         "stats" : "Stats",
@@ -57,7 +52,11 @@
         "gapToFirst" : "Ecart avec le plus rapide",
         "lapTrend" : "Tendance",
         "graphDriverPerf" : "Représentation graphique de la performance des tours du pilote lors des sessions serveur",
-        "whiteLine" : "La ligne blanche représente la moyenne des tours précédents"
+        "whiteLine" : "La ligne blanche représente la moyenne des tours précédents",
+        "pbTime" : "Meilleur temps",
+        "driverName" : "Driver Name",
+        "gapToBest" : "Gap to best time",
+        "totalLaps" : "Tours total"
     },
     "previous": "Précédent",
     "next": "Suivant"

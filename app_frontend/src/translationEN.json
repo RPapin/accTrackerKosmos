@@ -33,13 +33,6 @@
         "totalDrivers" : "TOTAL DRIVERS",
         "bestCar" : "BEST CAR"
     },
-    "serverDetail" : {
-        "driverName" : "Driver Name",
-        "gapToBest" : "Gap to best time",
-        "pbTime" : "PB TIME",
-        "avgSpeed" : "AVG SPEED",
-        "totalLaps" : "TOTAL LAPS"
-    },
     "serverLeaderboard" : {
         "stats" : "Stats",
         "gapToFirst" : "GAP FROM THE FIRST DRIVER",
@@ -57,7 +50,11 @@
         "gapToFirst" : "GAP FROM THE FIRST",
         "lapTrend" : "LAP TREND",
         "graphDriverPerf" : "Graphical representation of the performance of the driver's laps during server sessions.",
-        "whiteLine" : "The white line represents the average of the previous laps"
+        "whiteLine" : "The white line represents the average of the previous laps",
+        "driverName" : "Driver Name",
+        "gapToBest" : "Gap to best time",
+        "pbTime" : "PB TIME",
+        "totalLaps" : "TOTAL LAPS"
     },
     "previous": "Previous",
     "next": "Next"
