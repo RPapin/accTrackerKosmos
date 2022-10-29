@@ -1,11 +1,1 @@
-{
-  "port": 9000,
-  "resPath": [
-    "D:\\Steam\\steamapps\\common\\Assetto Corsa Competizione Dedicated Server\\server\\results"
-  ],
-  "user": "vtracker2",
-  "password": "2022",
-  "updateTime": "3600000",
-  "firstStart": true,
-  "openOnStart": true
-}
+{"port":9000,"resPath":["D:\\ACC_Serveurs\\Serveur2\\results"],"user":"ACC","password":"KosMos010131","updateTime":"120000","firstStart":true,"openOnStart":false}
