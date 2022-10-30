@@ -13,7 +13,7 @@ class Footer extends Component {
                                     <i className="fas fa-crown"></i>
                                     <div className="cta-text">
                                         <h4>{this.props.t('footer.author')}</h4>
-                                        <span>Kosmos x Rémi PAPIN</span>
+                                        <span>KosMos Developpement Team</span>
                                     </div>
                                 </div>
                             </div>
