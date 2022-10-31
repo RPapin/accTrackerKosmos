@@ -81,11 +81,11 @@ class ServerLeaderboard extends Component {
                                 
                             </div>
                         </div> */}
-                        <div className="row">
+                        <div className="row firstRow">
                             <div className="col">
                                 <span className="goBackBtn" onClick={() => this.handleGoBack('/')}></span>
                             </div>
-                            <div className="col-md-12 only-desktop">
+                            <div className="col-md-12 only-desktop ">
                                 
                                 <h1 className="serverInfo" id='serverName'> {this.state.trackInfo.ses_serverName}</h1>
                             </div>
