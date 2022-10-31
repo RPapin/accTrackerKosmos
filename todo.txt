@@ -1,4 +1,6 @@
-
+Drapeau SRO
+Paramétrage des règles (ex : toggle 107%, toggle nbr de tour mini)
+Faire un fichier de config prod supprimer les 2 branches parallèles + gitignore la db
 Server Détail => Meilleur sector en rose temps otimal
 Liste Server => ~~ rajouter la classe et Nom du circuit
 Creer une branche prod
@@ -14,5 +16,6 @@ Check valid dans serverDetail
 serverLeaderboard => Premiere ligne centré nom => en dessous 3 colonnes
 mettre en rouge tant que pas objectif, variable a définir
 Server Détail => Valid En vert, meilleur tour en violet + Trad stat 
+Règle des 107%
 
 Nombre de tour faux dans fullLeaderboard => Suppression de la colonne + pas possible de cliquer pour détail

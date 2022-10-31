@@ -23,7 +23,8 @@ class ServerDetail extends Component {
             totalLaps: 0,
             totalValidLaps: 0,
             bestSectors: [],
-            urlLeaderboard: ""
+            urlLeaderboard: "",
+            driverName: ""
         }
     }
     handleGoBack =  (url) => {
@@ -37,13 +38,12 @@ class ServerDetail extends Component {
         window.scrollTo(0, 0);
         const serverName = window.location.href.split("/")[4];
         const track = window.location.href.split("/")[5];
-        const driverName = window.location.href.split("/")[6];
+        const driverName = decodeURI(window.location.href.split("/")[6]);
         const urlLeaderboard = "/serverLeaderboard/" + serverName + "/" + track;
         document.getElementById("normalPage").style.display = "none";
-        axios.post(`http://${Base.getIp()}:${Base.getPort()}/serverDetail/${serverName}/${track}/${driverName}`)
+        axios.post(`http://${Base.getIp()}:${Base.getPort()}/serverDetail/${serverName}/${track}/${driverName}/`)
             .then(res => {
-                console.log(res)
-                this.setState({ bestDriverTime: res.data[0], bestTime: res.data[1], times: res.data[2], avgSpeed: res.data[3], totalLaps: res.data[4], bestSectors: res.data[5], totalValidLaps: res.data[6], urlLeaderboard },
+                this.setState({ bestDriverTime: res.data[0], bestTime: res.data[1], times: res.data[2], avgSpeed: res.data[3], totalLaps: res.data[4], bestSectors: res.data[5], totalValidLaps: res.data[6], urlLeaderboard, driverName },
                     this.displayAll)
                 ChartJS.lineChartAvg("laps", this.state.times);
             });
@@ -85,7 +85,7 @@ class ServerDetail extends Component {
                                         <div className="row">
                                             <div className="col-md-3"></div>
                                             <div className="col-6 col-md-3 ">
-                                                <span id="drivername">{(((window.location.href).split("/")[6]).replace("%20", " ")).split("#")[0]}</span>
+                                                <span id="drivername">{this.state.driverName}</span>
                                                 <hr />
                                                 <span className="baseEle">{this.props.t('sessionDetail.driverName')}</span>
                                             </div>
@@ -108,7 +108,8 @@ class ServerDetail extends Component {
                                                 <h3>{this.props.t('sessionDetail.avgSpeed')}: <span>{this.state.avgSpeed}</span> Km/h</h3>
                                             </div>
                                             <div className="col-12 col-md-4">
-                                                <h3>{this.props.t('sessionDetail.totalLaps')}: {this.state.totalValidLaps.tim_driverCount >= VALID_LAPS_TARGET ? <span className="personalBestEle">{this.state.totalValidLaps.tim_driverCount}</span> : <span className="baseEle">{this.state.totalValidLaps.tim_driverCount}</span>} / {VALID_LAPS_TARGET}</h3>
+                                                {/* <h3>{this.props.t('sessionDetail.totalLaps')}: {this.state.totalValidLaps.tim_driverCount >= VALID_LAPS_TARGET ? <span className="personalBestEle">{this.state.totalValidLaps.tim_driverCount}</span> : <span className="baseEle">{this.state.totalValidLaps.tim_driverCount}</span>} / {VALID_LAPS_TARGET}</h3> */}
+                                                <h3>{this.props.t('sessionDetail.totalValidLaps')}: <span>{this.state.totalValidLaps.tim_driverCount}</span></h3>
                                             </div>
                                         </div>
                                         <hr />
@@ -133,7 +134,7 @@ class ServerDetail extends Component {
                         <div id="sessionTitle">
                             <i className="fas fa-poll-h"></i>
                             <hr />
-                            <h1>{this.props.t('sessionDetail.laps')} <span className="baseEle">{(((window.location.href).split("/")[6]).replaceAll("%20", " ")).split("#")[0]}</span></h1>
+                            <h1>{this.props.t('sessionDetail.laps')} <span className="baseEle">{this.state.driverName}</span></h1>
                         </div>
                         <div id="sessionContainer">
                             <table id="sessionList">
