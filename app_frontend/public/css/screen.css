@@ -89,6 +89,9 @@ and (max-width : 768px) {
     .logo-img {
         width: 5em;
     }
+    #sessionContainer #statSession:nth-child(3) {
+        font-size: 1em;
+    }
 }
 
 /* Tablet */

@@ -17,7 +17,8 @@
             "time" : "Temps",
             "car" : "Voiture",
             "lap" : "Tour",
-            "valid": "Valide"
+            "valid": "Valide",
+            "107%": "107%"
         }
     },
     "footer" : {
@@ -30,10 +31,8 @@
         "details" : "Détails",
         "bestTime" : "Meilleur temps de la session",
         "totalDrivers" : "Total pilote",
-        "bestCar" : "Meilleur voiture"
-    },
-    "serverDetail" : {
-
+        "bestCar" : "Meilleur voiture",
+        "107%" : "Règle des 107%, temps à battre"
     },
     "serverLeaderboard" : {
         "stats" : "Stats",
@@ -54,9 +53,10 @@
         "graphDriverPerf" : "Représentation graphique de la performance des tours du pilote lors des sessions serveur",
         "whiteLine" : "La ligne blanche représente la moyenne des tours précédents",
         "pbTime" : "Meilleur temps",
-        "driverName" : "Driver Name",
-        "gapToBest" : "Gap to best time",
-        "totalLaps" : "Tours total"
+        "driverName" : "Nom du pilote",
+        "gapToBest" : "Ecart avec le meilleur",
+        "totalLaps" : "Nombre de tours",
+        "totalValidLaps" : "Nombre de tours valides"
     },
     "previous": "Précédent",
     "next": "Suivant"

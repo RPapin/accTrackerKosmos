@@ -18,7 +18,8 @@
             "time" : "Time",
             "car" : "Car",
             "lap" : "Lap",
-            "valid": "Valid"
+            "valid": "Valid",
+            "107%": "107%"
         }
     },
     "footer" : {
@@ -31,7 +32,8 @@
         "details" : "Details",
         "bestTime" : "Best Time Session",
         "totalDrivers" : "Total Drivers",
-        "bestCar" : "Best Car"
+        "bestCar" : "Best Car",
+        "107%" : "107% rule, time to beat"
     },
     "serverLeaderboard" : {
         "stats" : "Stats",
@@ -54,7 +56,8 @@
         "driverName" : "Driver Name",
         "gapToBest" : "Gap to best time",
         "pbTime" : "PB Time",
-        "totalLaps" : "Total Laps"
+        "totalLaps" : "Total Laps",
+        "totalValidLaps" : "Total valids laps"
     },
     "previous": "Previous",
     "next": "Next"

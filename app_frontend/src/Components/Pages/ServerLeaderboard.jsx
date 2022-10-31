@@ -25,7 +25,8 @@ class ServerLeaderboard extends Component {
             avgCars: [],
             validCount: [],
             notValidTimes: [],
-            allLapsCount: []
+            allLapsCount: [],
+            timeToBeatSevenRule: ""
         }
     }
     handleGoBack =  (url) => {
@@ -49,16 +50,20 @@ class ServerLeaderboard extends Component {
         document.getElementById("normalPage").style.display = "none";
         axios.post(`http://${Base.getIp()}:${Base.getPort()}/serverLeaderboard/${server}/${track}`)
             .then((res) => {
-                
-                this.setState({ times: res.data[0], bestTime: res.data[1].tim_totalTime, totalDrivers: res.data[2].tim_driverCount, 
-                    bestSessions: res.data[3], trackInfo: res.data[4], usedCars: res.data[5], bestCarAvg: res.data[6], avgCars: res.data[7], 
-                    validCount: res.data[8], notValidTimes: res.data[9], allLapsCount: res.data[10] }, () => {
+                const bestTime = res.data[1].tim_totalTime;
+                const bestSessions = res.data[3];
+                // this.state.bestSessions.bestSectorOne
+                const timeToBeatSevenRule = bestTime * 1000 * 1.01;
+                this.setState({ times: res.data[0], bestTime, totalDrivers: res.data[2].tim_driverCount, 
+                    bestSessions, trackInfo: res.data[4], usedCars: res.data[5], bestCarAvg: res.data[6], avgCars: res.data[7], 
+                    validCount: res.data[8], notValidTimes: res.data[9], allLapsCount: res.data[10], timeToBeatSevenRule }, () => {
                         this.toogleDisplay(false);
+                        
                     });
-
+                
                 Chart.lineChart("gapFirst", this.state.times);
                 Chart.doughnutChart("carUsed", this.state.usedCars);
-
+                
             })
     }
 
@@ -114,6 +119,7 @@ class ServerLeaderboard extends Component {
                                         <th>{this.props.t('home.sessionArray.type')}</th>
                                         <th className="only-desktop">{this.props.t('home.sessionArray.laps')}</th>
                                         <th>{this.props.t('home.sessionArray.gap')}</th>
+                                        {/* <th>{this.props.t('home.sessionArray.107%')}</th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -124,7 +130,7 @@ class ServerLeaderboard extends Component {
                                             let track = (window.location.href).split("/")[5];
                                             serverName = serverName.split("#")[0];
                                             track = track.split("#")[0];
-                                            let driverLink = "/serverDetail/" + serverName + "/" + track + "/" + time.tim_driverName;
+                                            let driverLink = "/serverDetail/" + serverName + "/" + track + "/" + time.tim_driverName + "/";
                                             return (
                                                 <tr className="linkTable clickable" onClick={()=> this.handleRowClick(driverLink)} key={i}>
                                                     <td>{i + 1}</td>
@@ -138,12 +144,21 @@ class ServerLeaderboard extends Component {
                                                     <td className="only-desktop">{this.state.validCount.map(count => {
                                                         
                                                         if (count.tim_driverName === time.tim_driverName) {
+                                                            //Disabled mandatory laps display
                                                             const allLaps = this.state.allLapsCount.find(x => x.tim_driverName === count.tim_driverName)
+                                                            
                                                             const classColor = count.tim_validCount < VALID_LAPS_TARGET ? "baseEle" : "personalBestEle";
-                                                            return <><span className={classColor}>{count.tim_validCount}</span> / {allLaps.tim_totalCount}</>;
+                                                            
+                                                            // return <><span className={classColor}>{count.tim_validCount}</span> / {allLaps.tim_totalCount}</>;
+                                                            return <><span>{allLaps.tim_totalCount}</span></>;
                                                         }
                                                     })}</td>
                                                     <td>{Base.getGap((this.state.bestTime * 1000), (time.tim_totalTime * 1000))}</td>
+                                                    {/* <td>{ 
+                                                        
+                                                            ((time.tim_totalTime * 1000) < this.state.timeToBeatSevenRule ? <i className="fa-solid fa-circle-check personalBestEle"></i> : <i className="fa-solid fa-circle-xmark baseEle"></i>)
+                                                        }
+                                                        </td> */}
                                                 </tr>
                                             )
                                         })
@@ -178,8 +193,9 @@ class ServerLeaderboard extends Component {
                                     }
                                 </tbody>
                             </table>
-                            <div className="only-full-desktop" id="tableFooter">
-                                <h5>{this.props.t('fullLeaderboad.optimalTime')}: <span className="bestEle"> {Base.getFullTime((this.state.bestSessions.bestSectorOne * 1000) + (this.state.bestSessions.bestSectorTwo * 1000) + (this.state.bestSessions.bestSectorTree * 1000))} </span> </h5>
+                            <div className="" id="tableFooter">
+                                <h5>{this.props.t('fullLeaderboad.optimalTime')}: <span className="bestEle"> {Base.getFullTime((this.state.bestSessions.bestSectorOne * 1000) + (this.state.bestSessions.bestSectorTwo * 1000) + (this.state.bestSessions.bestSectorTree * 1000))} </span></h5>
+                                {/* <h5>{this.props.t('fullLeaderboad.107%')} : {Base.getFullTime(this.state.timeToBeatSevenRule)}</h5> */}
                             </div>
                         </div>
                         <div id="arrowCont">
