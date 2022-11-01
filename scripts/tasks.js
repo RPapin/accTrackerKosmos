@@ -22,7 +22,6 @@ exports.startup = async () => {
 
             for (let driver of leaderboards) {
                 let times = results.getAllLapsFromDriver(session, driver.car["carId"]);
-
                 for (let time of times) {
                     database.insertTime((driver.currentDriver["firstName"] + " " + driver.currentDriver["lastName"]), driver.car["carModel"], time.splits, idSession, time.isValidForBest == true ? -1 : 0);
                 }

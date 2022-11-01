@@ -21,7 +21,6 @@ exports.createSession = (server, track, weatherValue, sessionType, dataCreation)
 
 exports.insertTime = (driverName, carModel, time, lastId, isValid) => {
     const db = new sqlite(pathDb);
-
     // ACI 40 LAPS
     const isValidForACI = checkACI(driverName, time);
 
@@ -153,6 +152,7 @@ exports.serverLeaderboard = (server, track) => {
     const db = new sqlite(pathDb);
     // request to update to gather only valids laps / all laps
     let stmt = db.prepare(`SELECT * FROM (SELECT *, sum(tim_sectorOne + tim_sectorTwo + tim_sectorTree) as tim_totalTime FROM Times INNER JOIN Cars on tim_carModel = car_id INNER JOIN Sessions ON ses_id = tim_sessionId WHERE ses_serverName = ? AND ses_track = ? AND tim_isValid=-1 GROUP BY tim_driverName, tim_sectorOne, tim_sectorTwo, tim_sectorTree ORDER BY tim_totalTime ASC) GROUP BY tim_driverName ORDER BY tim_totalTime ASC;`);
+    // console.log(server, track)
     let times = stmt.all(server, track);
 
     stmt = db.prepare(`SELECT * FROM (SELECT sum(tim_sectorOne + tim_sectorTwo + tim_sectorTree) as tim_totalTime FROM Times INNER JOIN Sessions ON ses_id = tim_sessionId WHERE ses_serverName = ? AND ses_track = ? AND tim_isValid = -1 GROUP BY tim_driverName, tim_sectorOne, tim_sectorTwo, tim_sectorTree)ORDER BY tim_totalTime ASC LIMIT 1;`);
@@ -171,6 +171,7 @@ exports.serverLeaderboard = (server, track) => {
     let cars = stmt.all(server, track);
 
     stmt = db.prepare(`SELECT car_name, sum(tim_sectorOne + tim_sectorTwo + tim_sectorTree) as tim_totaltime FROM Times INNER JOIN Sessions ON ses_id = tim_sessionId INNER JOIN Cars ON tim_carModel = car_id WHERE ses_serverName= ? AND ses_track = ? AND tim_isValid = -1 ORDER BY tim_totaltime ASC LIMIT 1;`)
+    
     let bestAvgCar = stmt.get(server, track);
     let avgCars = stmt.all(server, track);
 

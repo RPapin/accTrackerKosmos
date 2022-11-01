@@ -42,7 +42,6 @@ class ServerLeaderboard extends Component {
     }
     componentDidMount = () => {
         window.scrollTo(0, 0);
-
         let id = (window.location.href).split("/");
         let server = id[4];
         let track = id[5];
@@ -58,7 +57,6 @@ class ServerLeaderboard extends Component {
                     bestSessions, trackInfo: res.data[4], usedCars: res.data[5], bestCarAvg: res.data[6], avgCars: res.data[7], 
                     validCount: res.data[8], notValidTimes: res.data[9], allLapsCount: res.data[10], timeToBeatSevenRule }, () => {
                         this.toogleDisplay(false);
-                        
                     });
                 
                 Chart.lineChart("gapFirst", this.state.times);
@@ -86,15 +84,14 @@ class ServerLeaderboard extends Component {
                                 <span className="goBackBtn" onClick={() => this.handleGoBack('/')}></span>
                             </div>
                             <div className="col-md-12 only-desktop ">
-                                
                                 <h1 className="serverInfo" id='serverName'> {this.state.trackInfo.ses_serverName}</h1>
                             </div>
                         </div>
                         <div className="row full-w">
-                            <div className="col-6 only-mobile">
+                            <div className="col-7 offset-1 only-mobile">
                                 <h3 className="serverInfo"> {this.state.trackInfo.ses_serverName}</h3>
                             </div>
-                            <div className="col-6 col-md-4">
+                            <div className="col-4 col-md-4">
                                 <h3 className="serverInfo"> {this.state.trackInfo.tra_name}</h3>
                             </div>
                             <div className="col-md-4 only-desktop">
@@ -116,7 +113,7 @@ class ServerLeaderboard extends Component {
                                         <th className="only-desktop">S1</th>
                                         <th className="only-desktop">S2</th>
                                         <th className="only-desktop">S3</th>
-                                        <th>{this.props.t('home.sessionArray.type')}</th>
+                                        <th>{this.props.t('home.sessionArray.time')}</th>
                                         <th className="only-desktop">{this.props.t('home.sessionArray.laps')}</th>
                                         <th>{this.props.t('home.sessionArray.gap')}</th>
                                         {/* <th>{this.props.t('home.sessionArray.107%')}</th> */}
@@ -231,11 +228,11 @@ class ServerLeaderboard extends Component {
                                 </div>
                                 <div className="col-lg-1"></div>
                             </div>
-                                                        <br /><br />
+                            <br /><br />
                             <div className="row">
                                 <div className="col-lg-3"></div>
                                 <div className="col-12col-lg-6">
-                                    <h1>{this.state.bestCarAvg.car_name}</h1>
+                                    {this.state.times[0] !== undefined ? <h1>{this.state.times[0].car_name}</h1> : <></>}
                                     <hr />
                                     <h3 id="statSession">{this.props.t('fullLeaderboad.bestCar')}</h3>
                                 </div>

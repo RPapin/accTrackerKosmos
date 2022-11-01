@@ -27,7 +27,7 @@ exports.getAllJsonFiles = async (filespath) => {
 
 exports.getJsonFile = (filename) => {
     let data;
-    data = fs.readFileSync(filename, 'latin1').toString();
+    data = fs.readFileSync(filename, 'utf16le').toString();
     data = this.removeEscape(data);
     return data;
 }
