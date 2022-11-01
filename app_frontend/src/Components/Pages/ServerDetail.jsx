@@ -85,14 +85,14 @@ class ServerDetail extends Component {
                                         <div className="row">
                                             <div className="col-md-3"></div>
                                             <div className="col-6 col-md-3 ">
-                                                <span id="drivername">{this.state.driverName}</span>
+                                                <span id="drivername" className='span-driver-details'>{this.state.driverName}</span>
                                                 <hr />
-                                                <span className="baseEle">{this.props.t('sessionDetail.driverName')}</span>
+                                                <span className="baseEle span-driver-details-text">{this.props.t('sessionDetail.driverName')}</span>
                                             </div>
                                             <div className="col-6 col-md-3">
-                                                <span id="drivername">{Base.getGap((this.state.bestDriverTime.tim_totalTime * 1000), (this.state.bestTime.tim_totalTime * 1000))}</span>
+                                                <span id="drivername" className='span-driver-details'>{Base.getGap((this.state.bestDriverTime.tim_totalTime * 1000), (this.state.bestTime.tim_totalTime * 1000))}</span>
                                                 <hr />
-                                                <span className="baseEle">{this.props.t('sessionDetail.gapToBest')}</span>
+                                                <span className="baseEle span-driver-details-text">{this.props.t('sessionDetail.gapToBest')}</span>
                                             </div>
                                             <div className="col-md-3"></div>
                                         </div>

@@ -76,7 +76,7 @@ and (max-width : 768px) {
     }
 
     .card-body img {
-        width: 25%;
+        width: 50%;
     }
 
     .only-full-desktop {
@@ -91,6 +91,14 @@ and (max-width : 768px) {
     }
     #sessionContainer #statSession:nth-child(3) {
         font-size: 1em;
+    }
+    .span-driver-details {
+        min-height: 90px;
+    }
+    .span-driver-details-text {
+        min-height: 90px;
+        display: flex;
+        justify-content: center;
     }
 }
 
@@ -125,6 +133,9 @@ and (max-width : 989px) and (min-width : 769px) {
     #sessionList th {
         padding: 20px;
     }
+    .span-driver-details {
+        min-height: 90px;
+    }
 }
 
 /* Laptops */
@@ -148,6 +159,9 @@ and (max-width : 1400px) and (min-width: 990px) {
 
     .only-mobile {
         display: none;
+    }
+    .span-driver-details {
+        min-height: 70px;
     }
     
 }
@@ -194,5 +208,7 @@ and (min-width : 1401px) {
     .only-mobile {
         display: none;
     }
-
+    .span-driver-details {
+        min-height: 140px;
+    }
 }

@@ -696,3 +696,8 @@ ul {
     justify-content: space-around;
     
 }
+.span-driver-details {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
